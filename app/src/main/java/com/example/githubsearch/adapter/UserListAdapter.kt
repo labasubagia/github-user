@@ -5,6 +5,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
+import com.bumptech.glide.request.RequestOptions
 import com.example.githubsearch.R
 import com.example.githubsearch.model.User
 import kotlinx.android.synthetic.main.list_user.view.*
@@ -19,6 +20,8 @@ class UserListAdapter : RecyclerView.Adapter<UserListAdapter.UserListViewHolder>
         fun bind(user: User) {
             with(itemView) {
                 Glide.with(itemView)
+                    .asBitmap()
+                    .apply(RequestOptions().override(100, 100))
                     .load(user.avatar_url)
                     .into(img_avatar)
                 tv_username.text = user.login

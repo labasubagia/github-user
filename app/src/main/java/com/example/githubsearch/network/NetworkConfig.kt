@@ -16,6 +16,9 @@ class NetworkConfig {
 
     private fun getHttpClient(): OkHttpClient {
 
+        // request timeout
+        val timeOut = 30L
+
         // log interceptor to see in logcat
         val httpLoggingInterceptor = HttpLoggingInterceptor()
         httpLoggingInterceptor.level = HttpLoggingInterceptor.Level.BODY
@@ -31,8 +34,8 @@ class NetworkConfig {
                 chain.proceed(request)
             }
             .addInterceptor(httpLoggingInterceptor)
-            .connectTimeout(10, TimeUnit.SECONDS)
-            .writeTimeout(10, TimeUnit.SECONDS)
+            .connectTimeout(timeOut, TimeUnit.SECONDS)
+            .writeTimeout(timeOut, TimeUnit.SECONDS)
             .retryOnConnectionFailure(true)
             .build()
     }

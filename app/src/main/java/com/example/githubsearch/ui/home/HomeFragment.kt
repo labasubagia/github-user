@@ -75,7 +75,7 @@ class HomeFragment : Fragment() {
 
 
         // search view
-        sv_user.isIconified = false
+        sv_user.isIconifiedByDefault = false
         sv_user.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
             // on submit: send search user request
             override fun onQueryTextSubmit(query: String?): Boolean {

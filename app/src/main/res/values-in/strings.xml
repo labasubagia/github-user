@@ -9,4 +9,8 @@
     <string name="request_api_problem">Terjadi kesalahan server, harap coba lagi nanti</string>
     <string name="request_unknown_fail">Terjadi error yang tidak diketahui, mohon coba nanti</string>
     <string name="request_error_label">Kesalahan</string>
+    <string name="background_profile">Latar Belakang Profil</string>
+    <string name="follower_zero">Pengguna tidak diikuti siapapun</string>
+    <string name="following_zero">Pengguna tidak mengikuti siapapun</string>
+    <string name="label_places">Tempat</string>
 </resources>

@@ -8,4 +8,8 @@
     <string name="request_api_problem">An error occurs in server, please try again later</string>
     <string name="request_unknown_fail">An unknown error occurs, please try again later</string>
     <string name="request_error_label">Error!</string>
+    <string name="background_profile">Background Profile</string>
+    <string name="follower_zero">User not followed by anyone</string>
+    <string name="following_zero">User not follow anyone</string>
+    <string name="label_places">Places</string>
 </resources>
