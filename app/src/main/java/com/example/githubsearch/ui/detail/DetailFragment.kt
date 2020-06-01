@@ -11,7 +11,7 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.bumptech.glide.Glide
 import com.example.githubsearch.R
-import com.example.githubsearch.util.showView
+import com.example.githubsearch.util.Util.showView
 import kotlinx.android.synthetic.main.detail_fragment.*
 
 class DetailFragment : Fragment() {
@@ -36,7 +36,7 @@ class DetailFragment : Fragment() {
         // views to show after data received and data exist
         val viewsExistData: ArrayList<View> = arrayListOf(
             img_avatar,
-            tv_name,
+            tv_username,
             tv_username,
             tv_repositories,
             tv_label_repositories,
@@ -78,17 +78,19 @@ class DetailFragment : Fragment() {
 
             // user's detail
             getUserDetail().observe(viewLifecycleOwner, Observer { user ->
-                if (user != null) {
+                user?.let {
+
+                    val login = "@${it.login}"
 
                     // set data to views
                     Glide.with(this@DetailFragment)
-                        .load(user.avatar_url)
+                        .load(it.avatar_url)
                         .into(img_avatar)
-                    tv_name.text = user.name
-                    tv_username.text = user.login
-                    tv_repositories.text = user.public_repos.toString()
-                    tv_followers.text = user.followers.toString()
-                    tv_following.text = user.following.toString()
+                    tv_name.text = it.name
+                    tv_username.text = login
+                    tv_repositories.text = it.public_repos.toString()
+                    tv_followers.text = it.followers.toString()
+                    tv_following.text = it.following.toString()
 
                     // set views visibility after data received
                     showView(viewsBeforeData, false)
@@ -98,22 +100,22 @@ class DetailFragment : Fragment() {
 
             // user's follower
             getUserFollowers().observe(viewLifecycleOwner, Observer { followers ->
-                if (followers != null) {
-                    Log.d("Followers", followers.toString())
+                followers?.let {
+                    Log.d("Followers", it.toString())
                 }
             })
 
             // user's following
             getUserFollowing().observe(viewLifecycleOwner, Observer { following ->
-                if (following != null) {
-                    Log.d("Followers", following.toString())
+                following.let {
+                    Log.d("Followers", it.toString())
                 }
             })
 
             // error
-            getErrorMessage().observe(viewLifecycleOwner, Observer { message ->
-                if (message != null) {
-                    Toast.makeText(context, message, Toast.LENGTH_SHORT).show()
+            getErrorMessageInt().observe(viewLifecycleOwner, Observer { messageInt ->
+                messageInt?.let {
+                    Toast.makeText(context, getString(it), Toast.LENGTH_SHORT).show()
                 }
             })
         }

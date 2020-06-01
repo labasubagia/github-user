@@ -21,7 +21,7 @@ class UserListAdapter : RecyclerView.Adapter<UserListAdapter.UserListViewHolder>
                 Glide.with(itemView)
                     .load(user.avatar_url)
                     .into(img_avatar)
-                tv_name.text = user.login
+                tv_username.text = user.login
                 itemView.setOnClickListener { onItemClickCallback?.onItemClicked(user) }
             }
         }

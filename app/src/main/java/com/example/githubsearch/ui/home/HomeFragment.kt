@@ -14,7 +14,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.githubsearch.R
 import com.example.githubsearch.adapter.UserListAdapter
 import com.example.githubsearch.model.User
-import com.example.githubsearch.util.showView
+import com.example.githubsearch.util.Util.showView
 import kotlinx.android.synthetic.main.home_fragment.*
 
 class HomeFragment : Fragment() {
@@ -103,11 +103,11 @@ class HomeFragment : Fragment() {
 
             // get users that found from search
             getFoundUsers().observe(viewLifecycleOwner, Observer { foundUsers ->
-                if (foundUsers != null) {
-                    if (foundUsers.total_count == 0) {
+                foundUsers?.let {
+                    if (it.total_count == 0) {
                         showView(viewsEmptyData)
                     } else {
-                        userListAdapter.setUsers(foundUsers.items)
+                        userListAdapter.setUsers(it.items)
                         showView(viewsExistData)
                     }
                     showView(viewsBeforeData, false)
@@ -115,9 +115,9 @@ class HomeFragment : Fragment() {
             })
 
             // get error
-            getErrorMessage().observe(viewLifecycleOwner, Observer { message ->
-                if (message != null) {
-                    Toast.makeText(context, message, Toast.LENGTH_LONG).show()
+            getErrorMessageInt().observe(viewLifecycleOwner, Observer { messageInt ->
+                messageInt?.let {
+                    Toast.makeText(context, getString(it), Toast.LENGTH_LONG).show()
                     showView(viewsBeforeData, false)
                 }
             })

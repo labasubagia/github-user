@@ -5,4 +5,8 @@
     <string name="label_followers">Pengikut</string>
     <string name="label_following">Mengikuti</string>
     <string name="label_repositories">Repository</string>
+    <string name="request_network_failure">Harap periksa koneksi anda dan coba lagi nanti</string>
+    <string name="request_api_problem">Terjadi kesalahan server, harap coba lagi nanti</string>
+    <string name="request_unknown_fail">Terjadi error yang tidak diketahui, mohon coba nanti</string>
+    <string name="request_error_label">Kesalahan</string>
 </resources>
