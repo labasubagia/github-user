@@ -12,7 +12,7 @@ import com.bumptech.glide.Glide
 import com.example.githubsearch.R
 import com.example.githubsearch.adapter.FollowPagerAdapter
 import com.example.githubsearch.util.Util.numberFormat
-import com.example.githubsearch.util.UtilView.setInfoView
+import com.example.githubsearch.util.UtilView.setInfoViewAsErrorView
 import com.example.githubsearch.util.UtilView.showView
 import kotlinx.android.synthetic.main.detail_fragment.*
 
@@ -103,9 +103,9 @@ class DetailFragment : Fragment() {
             })
 
             // error
-            getErrorMessageInt().observe(viewLifecycleOwner, Observer { messageInt ->
-                messageInt?.let {
-                    setInfoView(info_view, R.drawable.ic_undraw_warning, it)
+            getError().observe(viewLifecycleOwner, Observer {
+                it?.let {
+                    setInfoViewAsErrorView(info_view, it)
                     showView(viewsInfo)
                     showView(viewsBeforeData, false)
                 }

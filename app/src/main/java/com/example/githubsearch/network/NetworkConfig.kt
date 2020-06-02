@@ -17,7 +17,7 @@ class NetworkConfig {
     private fun getHttpClient(): OkHttpClient {
 
         // request timeout for many data request like followers
-        val timeOut = 100L
+        val timeOut = 15L
 
         // log interceptor to see in logcat
         val httpLoggingInterceptor = HttpLoggingInterceptor()

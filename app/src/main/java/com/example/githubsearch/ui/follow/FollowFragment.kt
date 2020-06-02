@@ -12,6 +12,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.githubsearch.R
 import com.example.githubsearch.adapter.UserListAdapter
 import com.example.githubsearch.util.UtilView.setInfoView
+import com.example.githubsearch.util.UtilView.setInfoViewAsErrorView
 import com.example.githubsearch.util.UtilView.showView
 import kotlinx.android.synthetic.main.follow_fragment.*
 
@@ -124,9 +125,9 @@ class FollowFragment : Fragment() {
         })
 
         // get error
-        viewModel.getErrorMessageInt().observe(this, Observer {
+        viewModel.getError().observe(this, Observer {
             it?.let {
-                setInfoView(info_view, R.drawable.ic_undraw_warning, it)
+                setInfoViewAsErrorView(info_view, it)
                 showView(viewsInfo)
                 showView(viewsBeforeData, false)
             }

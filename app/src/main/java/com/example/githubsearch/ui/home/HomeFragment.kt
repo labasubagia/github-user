@@ -14,6 +14,7 @@ import com.example.githubsearch.R
 import com.example.githubsearch.adapter.UserListAdapter
 import com.example.githubsearch.model.User
 import com.example.githubsearch.util.UtilView.setInfoView
+import com.example.githubsearch.util.UtilView.setInfoViewAsErrorView
 import com.example.githubsearch.util.UtilView.showView
 import kotlinx.android.synthetic.main.home_fragment.*
 
@@ -126,9 +127,9 @@ class HomeFragment : Fragment() {
             })
 
             // get error
-            getErrorMessageInt().observe(viewLifecycleOwner, Observer { messageInt ->
-                messageInt?.let {
-                    setInfoView(info_view, R.drawable.ic_undraw_warning, it)
+            getError().observe(viewLifecycleOwner, Observer {
+                it?.let {
+                    setInfoViewAsErrorView(info_view, it)
                     showView(viewsInfo)
                     showView(viewsBeforeData, false)
                 }
