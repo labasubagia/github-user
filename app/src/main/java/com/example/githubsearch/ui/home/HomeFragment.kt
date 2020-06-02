@@ -5,7 +5,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.SearchView
-import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
@@ -14,7 +13,8 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.githubsearch.R
 import com.example.githubsearch.adapter.UserListAdapter
 import com.example.githubsearch.model.User
-import com.example.githubsearch.util.Util.showView
+import com.example.githubsearch.util.UtilView.setInfoView
+import com.example.githubsearch.util.UtilView.showView
 import kotlinx.android.synthetic.main.home_fragment.*
 
 class HomeFragment : Fragment() {
@@ -31,6 +31,11 @@ class HomeFragment : Fragment() {
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
 
+
+        // views that can show before or after data
+        val viewsInfo: ArrayList<View> = arrayListOf(
+            info_view
+        )
         // views to show when request data
         val viewsBeforeData: ArrayList<View> = arrayListOf(
             progress_bar
@@ -39,14 +44,10 @@ class HomeFragment : Fragment() {
         val viewsExistData: ArrayList<View> = arrayListOf(
             rv_users
         )
-        // views to show after data received but data is empty
-        val viewsEmptyData: ArrayList<View> = arrayListOf(
-            tv_not_found
-        )
         // views to hide when request data
         val viewsAfterData = ArrayList<View>().apply {
             addAll(viewsExistData)
-            addAll(viewsEmptyData)
+            addAll(viewsInfo)
         }
 
 
@@ -91,6 +92,10 @@ class HomeFragment : Fragment() {
         })
 
 
+        // set img info
+        setInfoView(info_view, R.drawable.ic_undraw_people_search, R.string.search_user_info)
+        showView(viewsInfo)
+
         // home view model
         viewModel = ViewModelProvider(
             this,
@@ -105,10 +110,16 @@ class HomeFragment : Fragment() {
             getFoundUsers().observe(viewLifecycleOwner, Observer { foundUsers ->
                 foundUsers?.let {
                     if (it.total_count == 0) {
-                        showView(viewsEmptyData)
+                        setInfoView(
+                            info_view,
+                            R.drawable.ic_undraw_no_data,
+                            R.string.user_not_found
+                        )
+                        showView(viewsInfo)
                     } else {
                         userListAdapter.setUsers(it.items)
                         showView(viewsExistData)
+                        showView(viewsInfo, false)
                     }
                     showView(viewsBeforeData, false)
                 }
@@ -117,7 +128,8 @@ class HomeFragment : Fragment() {
             // get error
             getErrorMessageInt().observe(viewLifecycleOwner, Observer { messageInt ->
                 messageInt?.let {
-                    Toast.makeText(context, getString(it), Toast.LENGTH_LONG).show()
+                    setInfoView(info_view, R.drawable.ic_undraw_warning, it)
+                    showView(viewsInfo)
                     showView(viewsBeforeData, false)
                 }
             })

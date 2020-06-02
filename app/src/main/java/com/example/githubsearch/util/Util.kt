@@ -1,7 +1,8 @@
 package com.example.githubsearch.util
 
-import android.view.View
 import com.example.githubsearch.R
+import java.text.NumberFormat
+import java.util.*
 
 object Util {
 
@@ -10,13 +11,6 @@ object Util {
     const val REQUEST_ERROR_API_PROBLEM = "request_api_problem"
 
 
-    // function to make views visible or gone
-    fun showView(views: ArrayList<View>, isShow: Boolean = true) {
-        views.forEach {
-            it.visibility = if (isShow) View.VISIBLE else View.GONE
-        }
-    }
-
     // function to give request error a specific message
     fun getRequestErrorResourceInt(requestErrorType: String): Int {
         return when (requestErrorType) {
@@ -24,5 +18,12 @@ object Util {
             REQUEST_ERROR_API_PROBLEM -> R.string.request_api_problem
             else -> R.string.request_unknown_fail
         }
+    }
+
+    // function to format thousand number string
+    fun numberFormat(number: Int): String {
+        // use comma separator
+        val formatter = NumberFormat.getInstance(Locale.US)
+        return formatter.format(number)
     }
 }

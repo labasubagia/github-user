@@ -1,6 +1,6 @@
 <resources>
     <string name="app_name">Github Users</string>
-    <string name="user_not_found">User Not Found</string>
+    <string name="user_not_found">No Data Found</string>
     <string name="label_repositories">Repositories</string>
     <string name="label_followers">Followers</string>
     <string name="label_following">Following</string>
@@ -12,4 +12,6 @@
     <string name="follower_zero">User not followed by anyone</string>
     <string name="following_zero">User not follow anyone</string>
     <string name="label_places">Places</string>
+    <string name="image_info">Image Info</string>
+    <string name="search_user_info">You can search github user</string>
 </resources>

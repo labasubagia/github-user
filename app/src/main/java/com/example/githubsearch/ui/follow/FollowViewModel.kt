@@ -4,7 +4,9 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.example.githubsearch.model.User
 import com.example.githubsearch.network.NetworkConfig
-import com.example.githubsearch.util.Util
+import com.example.githubsearch.util.Util.REQUEST_ERROR_API_PROBLEM
+import com.example.githubsearch.util.Util.REQUEST_ERROR_NETWORK_FAILURE
+import com.example.githubsearch.util.Util.getRequestErrorResourceInt
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -20,8 +22,7 @@ class FollowViewModel : ViewModel() {
     fun setUserFollower(username: String) {
         NetworkConfig().api().userFollowers(username).enqueue(object : Callback<ArrayList<User>> {
             override fun onFailure(call: Call<ArrayList<User>>, t: Throwable) {
-                errorMessageInt.value =
-                    Util.getRequestErrorResourceInt(Util.REQUEST_ERROR_NETWORK_FAILURE)
+                errorMessageInt.value = getRequestErrorResourceInt(REQUEST_ERROR_NETWORK_FAILURE)
             }
 
             override fun onResponse(
@@ -32,8 +33,7 @@ class FollowViewModel : ViewModel() {
                     errorMessageInt.value = null
                     userFollowers.value = response.body()
                 } else {
-                    errorMessageInt.value =
-                        Util.getRequestErrorResourceInt(Util.REQUEST_ERROR_API_PROBLEM)
+                    errorMessageInt.value = getRequestErrorResourceInt(REQUEST_ERROR_API_PROBLEM)
                 }
             }
         })
@@ -43,8 +43,7 @@ class FollowViewModel : ViewModel() {
     fun setUserFollowing(username: String) {
         NetworkConfig().api().userFollowing(username).enqueue(object : Callback<ArrayList<User>> {
             override fun onFailure(call: Call<ArrayList<User>>, t: Throwable) {
-                errorMessageInt.value =
-                    Util.getRequestErrorResourceInt(Util.REQUEST_ERROR_NETWORK_FAILURE)
+                errorMessageInt.value = getRequestErrorResourceInt(REQUEST_ERROR_NETWORK_FAILURE)
             }
 
             override fun onResponse(
@@ -55,8 +54,7 @@ class FollowViewModel : ViewModel() {
                     errorMessageInt.value = null
                     userFollowing.value = response.body()
                 } else {
-                    errorMessageInt.value =
-                        Util.getRequestErrorResourceInt(Util.REQUEST_ERROR_API_PROBLEM)
+                    errorMessageInt.value = getRequestErrorResourceInt(REQUEST_ERROR_API_PROBLEM)
                 }
             }
         })

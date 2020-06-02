@@ -21,8 +21,10 @@ class UserListAdapter : RecyclerView.Adapter<UserListAdapter.UserListViewHolder>
             with(itemView) {
                 Glide.with(itemView)
                     .asBitmap()
-                    .apply(RequestOptions().override(100, 100))
+                    .apply(RequestOptions().override(80, 80))
                     .load(user.avatar_url)
+                    .placeholder(R.drawable.ic_undraw_profile_pic)
+                    .error(R.drawable.ic_undraw_profile_pic)
                     .into(img_avatar)
                 tv_username.text = user.login
                 itemView.setOnClickListener { onItemClickCallback?.onItemClicked(user) }
