@@ -4,7 +4,9 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
 import android.widget.SearchView
+import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
@@ -77,7 +79,6 @@ class HomeFragment : Fragment() {
 
 
         // search view
-        sv_user.isIconifiedByDefault = false
         sv_user.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
             // on submit: send search user request
             override fun onQueryTextSubmit(query: String?): Boolean {
@@ -92,10 +93,39 @@ class HomeFragment : Fragment() {
             }
         })
 
+        // get close btn from search view
+        val searchCloseButtonId =
+            sv_user.resources.getIdentifier("android:id/search_close_btn", null, null)
+        val searchCloseButton: ImageView = sv_user.findViewById(searchCloseButtonId)
 
-        // set img info
-        setInfoView(info_view, R.drawable.ic_undraw_people_search, R.string.search_user_info)
-        showView(viewsInfo)
+        // customize search view close button behaviour
+        // to remove data when data exist
+        searchCloseButton.apply {
+            // remove wave effect when btn onclick
+            background = null
+
+            // modify close btn onclick
+            setOnClickListener {
+
+                // set query manually, because this ability gone
+                sv_user.setQuery("", false)
+
+                // only when data exist
+                if (!info_view.isVisible) {
+
+                    // show info view
+                    showInfoView()
+
+                    // clear list user, remove recycler view
+                    userListAdapter.setUsers(arrayListOf())
+                    showView(viewsExistData, false)
+                }
+            }
+        }
+
+
+        showInfoView()
+
 
         // home view model
         viewModel = ViewModelProvider(
@@ -135,5 +165,11 @@ class HomeFragment : Fragment() {
                 }
             })
         }
+    }
+
+    // show info view for search
+    private fun showInfoView() {
+        setInfoView(info_view, R.drawable.ic_undraw_people_search, R.string.search_user_info)
+        showView(info_view)
     }
 }

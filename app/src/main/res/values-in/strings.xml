@@ -17,4 +17,6 @@
     <string name="search_user_info">Anda bisa mencari pengguna github</string>
     <string name="label_location">Lokasi</string>
     <string name="label_company">Perusahaan</string>
+    <string name="icon">Ikon</string>
+    <string name="search_hint">Ketik disini untuk cari pengguna</string>
 </resources>

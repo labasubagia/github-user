@@ -84,7 +84,7 @@
             <androidx.cardview.widget.CardView
                 android:id="@+id/cv_info"
                 android:layout_width="0dp"
-                android:layout_height="90dp"
+                android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
                 android:layout_marginTop="32dp"
                 android:layout_marginEnd="16dp"
@@ -240,6 +240,7 @@
                         android:layout_marginStart="8dp"
                         android:text="@string/label_company"
                         android:textColor="@color/colorPrimary"
+                        app:layout_constraintBottom_toBottomOf="@+id/icon_company"
                         app:layout_constraintStart_toEndOf="@+id/icon_company"
                         app:layout_constraintTop_toTopOf="@+id/icon_company" />
 
@@ -270,6 +271,7 @@
                         android:layout_marginStart="8dp"
                         android:text="@string/label_location"
                         android:textColor="@color/colorPrimary"
+                        app:layout_constraintBottom_toBottomOf="@+id/icon_location"
                         app:layout_constraintStart_toEndOf="@id/icon_location"
                         app:layout_constraintTop_toTopOf="@id/icon_location" />
 
@@ -312,7 +314,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         app:tabBackground="@android:color/white"
-                        app:tabIndicatorColor="#eeeeee"
+                        app:tabIndicatorColor="#dddddd"
                         app:tabPaddingEnd="16dp"
                         app:tabPaddingStart="16dp">
 

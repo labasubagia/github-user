@@ -10,7 +10,12 @@ import java.util.*
 
 object UtilView {
 
-    // function to make views visible or gone
+    // function to make views visible or gone, only one view
+    fun showView(view: View, isShow: Boolean = true) {
+        view.visibility = if (isShow) View.VISIBLE else View.GONE
+    }
+
+    // function to make views visible or gone, multiple view
     fun showView(views: ArrayList<View>, isShow: Boolean = true) {
         views.forEach {
             it.visibility = if (isShow) View.VISIBLE else View.GONE
