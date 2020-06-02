@@ -4,7 +4,7 @@
     <string name="user_not_found">Tidak Ada Data Ditemukan</string>
     <string name="label_followers">Pengikut</string>
     <string name="label_following">Mengikuti</string>
-    <string name="label_repositories">Repository</string>
+    <string name="label_repositories">Repositori</string>
     <string name="request_network_failure">Harap periksa koneksi anda dan coba lagi nanti</string>
     <string name="request_api_problem">Terjadi kesalahan server, harap coba lagi nanti</string>
     <string name="request_unknown_fail">Terjadi error yang tidak diketahui, mohon coba nanti</string>
@@ -15,4 +15,6 @@
     <string name="label_places">Tempat</string>
     <string name="image_info">Gambar  Info</string>
     <string name="search_user_info">Anda bisa mencari pengguna github</string>
+    <string name="label_location">Lokasi</string>
+    <string name="label_company">Perusahaan</string>
 </resources>

@@ -105,8 +105,8 @@
                         android:layout_marginTop="16dp"
                         android:layout_marginEnd="8dp"
                         android:textAlignment="center"
+                        android:textColor="@color/colorPrimary"
                         android:textSize="30sp"
-                        android:textStyle="bold"
                         app:layout_constraintBottom_toTopOf="@+id/tv_label_repositories"
                         app:layout_constraintEnd_toStartOf="@+id/tv_followers"
                         app:layout_constraintStart_toStartOf="parent"
@@ -133,8 +133,8 @@
                         android:layout_marginTop="16dp"
                         android:layout_marginEnd="8dp"
                         android:textAlignment="center"
+                        android:textColor="@color/colorPrimary"
                         android:textSize="30sp"
-                        android:textStyle="bold"
                         app:layout_constraintBottom_toTopOf="@+id/tv_label_followers"
                         app:layout_constraintEnd_toStartOf="@+id/tv_following"
                         app:layout_constraintStart_toEndOf="@+id/tv_repositories"
@@ -161,8 +161,8 @@
                         android:layout_marginTop="16dp"
                         android:layout_marginEnd="16dp"
                         android:textAlignment="center"
+                        android:textColor="@color/colorPrimary"
                         android:textSize="30sp"
-                        android:textStyle="bold"
                         app:layout_constraintBottom_toTopOf="@+id/tv_label_following"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toEndOf="@+id/tv_followers"
@@ -187,7 +187,7 @@
             <androidx.cardview.widget.CardView
                 android:id="@+id/cv_info_place"
                 android:layout_width="match_parent"
-                android:layout_height="200dp"
+                android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
                 android:layout_marginTop="16dp"
                 android:layout_marginEnd="16dp"
@@ -207,7 +207,9 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="@string/label_places"
-                        android:textSize="18sp"
+                        android:textAllCaps="true"
+                        android:textColor="@color/colorPrimary"
+                        android:textSize="14sp"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent" />
 
@@ -221,16 +223,65 @@
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toBottomOf="@+id/places_label" />
 
-                    <TextView
-                        android:id="@+id/tv_location"
+                    <ImageView
+                        android:id="@+id/icon_company"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="32dp"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintHorizontal_bias="0.006"
+                        android:layout_marginTop="16dp"
+                        android:contentDescription="@string/icon"
+                        android:src="@drawable/ic_work_black_24dp"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@+id/line"
-                        tools:text="Location" />
+                        app:layout_constraintTop_toBottomOf="@+id/line" />
+
+                    <TextView
+                        android:id="@+id/tv_company_label"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="8dp"
+                        android:text="@string/label_company"
+                        android:textColor="@color/colorPrimary"
+                        app:layout_constraintStart_toEndOf="@+id/icon_company"
+                        app:layout_constraintTop_toTopOf="@+id/icon_company" />
+
+                    <TextView
+                        android:id="@+id/tv_company"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="8dp"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="@+id/tv_company_label"
+                        app:layout_constraintTop_toBottomOf="@+id/tv_company_label"
+                        tools:text="Random Company" />
+
+                    <ImageView
+                        android:id="@+id/icon_location"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="16dp"
+                        android:contentDescription="@string/icon"
+                        android:src="@drawable/ic_location_on_black_24dp"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/tv_company" />
+
+                    <TextView
+                        android:id="@+id/tv_location_label"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="8dp"
+                        android:text="@string/label_location"
+                        android:textColor="@color/colorPrimary"
+                        app:layout_constraintStart_toEndOf="@id/icon_location"
+                        app:layout_constraintTop_toTopOf="@id/icon_location" />
+
+                    <TextView
+                        android:id="@+id/tv_location"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="8dp"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="@+id/tv_location_label"
+                        app:layout_constraintTop_toBottomOf="@+id/tv_location_label"
+                        tools:text="Random Location" />
 
                 </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -261,7 +312,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         app:tabBackground="@android:color/white"
-                        app:tabIndicatorColor="@color/colorPrimary"
+                        app:tabIndicatorColor="#eeeeee"
                         app:tabPaddingEnd="16dp"
                         app:tabPaddingStart="16dp">
 

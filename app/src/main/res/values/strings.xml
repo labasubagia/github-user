@@ -14,4 +14,7 @@
     <string name="label_places">Places</string>
     <string name="image_info">Image Info</string>
     <string name="search_user_info">You can search github user</string>
+    <string name="label_company">Company</string>
+    <string name="label_location">Location</string>
+    <string name="icon">Icon</string>
 </resources>

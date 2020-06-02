@@ -95,6 +95,8 @@ class DetailFragment : Fragment() {
                     tv_repositories.text = numberFormat(it.public_repos)
                     tv_followers.text = numberFormat(it.followers)
                     tv_following.text = numberFormat(it.following)
+                    tv_location.text = it.location ?: "N/A"
+                    tv_company.text = it.company ?: "N/A"
 
                     // set views visibility after data received
                     showView(viewsBeforeData, false)
