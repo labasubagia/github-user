@@ -8,7 +8,7 @@ import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
 import com.example.githubsearch.R
 import com.example.githubsearch.model.User
-import kotlinx.android.synthetic.main.list_user.view.*
+import kotlinx.android.synthetic.main.layout_item_user.view.*
 
 class UserListAdapter : RecyclerView.Adapter<UserListAdapter.UserListViewHolder>() {
 
@@ -38,7 +38,8 @@ class UserListAdapter : RecyclerView.Adapter<UserListAdapter.UserListViewHolder>
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): UserListViewHolder {
-        val view = LayoutInflater.from(parent.context).inflate(R.layout.list_user, parent, false)
+        val view =
+            LayoutInflater.from(parent.context).inflate(R.layout.layout_item_user, parent, false)
         return UserListViewHolder(view)
     }
 

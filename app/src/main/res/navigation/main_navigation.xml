@@ -3,12 +3,13 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/main_navigation"
-    app:startDestination="@id/homeFragment">
+    app:startDestination="@id/homeFragment"
+    tools:ignore="UnusedNavigation">
     <fragment
         android:id="@+id/homeFragment"
         android:name="com.example.githubsearch.ui.home.HomeFragment"
         android:label="home_fragment"
-        tools:layout="@layout/home_fragment">
+        tools:layout="@layout/fragment_home">
         <action
             android:id="@+id/action_homeFragment_to_detailFragment"
             app:destination="@id/detailFragment" />
@@ -17,7 +18,7 @@
         android:id="@+id/detailFragment"
         android:name="com.example.githubsearch.ui.detail.DetailFragment"
         android:label="detail_fragment"
-        tools:layout="@layout/detail_fragment">
+        tools:layout="@layout/fragment_detail">
         <argument
             android:name="username"
             android:defaultValue="labasubagia22"

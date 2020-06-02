@@ -14,7 +14,7 @@ import com.example.githubsearch.adapter.FollowPagerAdapter
 import com.example.githubsearch.util.Util.numberFormat
 import com.example.githubsearch.util.UtilView.setInfoViewAsErrorView
 import com.example.githubsearch.util.UtilView.showView
-import kotlinx.android.synthetic.main.detail_fragment.*
+import kotlinx.android.synthetic.main.fragment_detail.*
 
 class DetailFragment : Fragment() {
 
@@ -24,7 +24,7 @@ class DetailFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        return inflater.inflate(R.layout.detail_fragment, container, false)
+        return inflater.inflate(R.layout.fragment_detail, container, false)
     }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {

@@ -14,7 +14,7 @@ import com.example.githubsearch.adapter.UserListAdapter
 import com.example.githubsearch.util.UtilView.setInfoView
 import com.example.githubsearch.util.UtilView.setInfoViewAsErrorView
 import com.example.githubsearch.util.UtilView.showView
-import kotlinx.android.synthetic.main.follow_fragment.*
+import kotlinx.android.synthetic.main.fragment_follow.*
 
 class FollowFragment : Fragment() {
 
@@ -38,7 +38,7 @@ class FollowFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.follow_fragment, container, false)
+        return inflater.inflate(R.layout.fragment_follow, container, false)
     }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
