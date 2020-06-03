@@ -3,13 +3,16 @@ package com.example.githubsearch.ui.detail
 import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
+import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.fragment.findNavController
 import com.bumptech.glide.Glide
 import com.example.githubsearch.R
+import com.example.githubsearch.activity.main.MainActivity
 import com.example.githubsearch.adapter.FollowPagerAdapter
 import com.example.githubsearch.util.Util.numberFormat
 import com.example.githubsearch.util.UtilView.setInfoViewAsErrorView
@@ -24,7 +27,39 @@ class DetailFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
+
+        val activity = activity as? MainActivity
+
+        // change action bar title
+        activity?.title = getString(R.string.page_detail)
+
+        // show back to home
+        activity?.supportActionBar?.setDisplayHomeAsUpEnabled(true)
+        setHasOptionsMenu(true)
+
         return inflater.inflate(R.layout.fragment_detail, container, false)
+    }
+
+    override fun onDestroyView() {
+
+        val activity = activity as? MainActivity
+
+        // remove back to home
+        activity?.supportActionBar?.setDisplayHomeAsUpEnabled(false)
+        setHasOptionsMenu(false)
+
+        super.onDestroyView()
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        return when (item.itemId) {
+            // back to home
+            android.R.id.home -> {
+                findNavController().navigateUp()
+                true
+            }
+            else -> super.onOptionsItemSelected(item)
+        }
     }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
@@ -83,6 +118,7 @@ class DetailFragment : Fragment() {
                 user?.let {
 
                     val login = "@${it.login}"
+                    val notApplicable = getString(R.string.not_applicable)
 
                     // set data to views
                     Glide.with(this@DetailFragment)
@@ -95,8 +131,8 @@ class DetailFragment : Fragment() {
                     tv_repositories.text = numberFormat(it.public_repos)
                     tv_followers.text = numberFormat(it.followers)
                     tv_following.text = numberFormat(it.following)
-                    tv_location.text = it.location ?: "N/A"
-                    tv_company.text = it.company ?: "N/A"
+                    tv_location.text = it.location ?: notApplicable
+                    tv_company.text = it.company ?: notApplicable
 
                     // set views visibility after data received
                     showView(viewsBeforeData, false)

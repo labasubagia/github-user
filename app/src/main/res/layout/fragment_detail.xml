@@ -8,12 +8,10 @@
 
     <ProgressBar
         android:id="@+id/progress_bar"
-        style="?android:attr/progressBarStyle"
+        style="@style/ProgressBarStyle.Gone"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:layout_centerInParent="true"
-        android:indeterminateTint="@color/colorPrimary"
-        android:visibility="gone" />
+        android:layout_centerInParent="true" />
 
     <include
         android:id="@+id/info_view"
@@ -56,7 +54,7 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintVertical_bias="0.051"
-                tools:src="@android:color/white" />
+                tools:src="@drawable/ic_undraw_profile_pic" />
 
             <TextView
                 android:id="@+id/tv_name"
@@ -83,12 +81,12 @@
 
             <androidx.cardview.widget.CardView
                 android:id="@+id/cv_info"
+                style="@style/CardViewStyle"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
                 android:layout_marginTop="32dp"
                 android:layout_marginEnd="16dp"
-                app:cardCornerRadius="10dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/tv_username">
@@ -99,14 +97,13 @@
 
                     <TextView
                         android:id="@+id/tv_repositories"
+                        style="@style/TextViewStyle.Black.Large"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="16dp"
                         android:layout_marginTop="16dp"
                         android:layout_marginEnd="8dp"
                         android:textAlignment="center"
-                        android:textColor="@color/colorPrimary"
-                        android:textSize="30sp"
                         app:layout_constraintBottom_toTopOf="@+id/tv_label_repositories"
                         app:layout_constraintEnd_toStartOf="@+id/tv_followers"
                         app:layout_constraintStart_toStartOf="parent"
@@ -127,14 +124,13 @@
 
                     <TextView
                         android:id="@+id/tv_followers"
+                        style="@style/TextViewStyle.Black.Large"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="8dp"
                         android:layout_marginTop="16dp"
                         android:layout_marginEnd="8dp"
                         android:textAlignment="center"
-                        android:textColor="@color/colorPrimary"
-                        android:textSize="30sp"
                         app:layout_constraintBottom_toTopOf="@+id/tv_label_followers"
                         app:layout_constraintEnd_toStartOf="@+id/tv_following"
                         app:layout_constraintStart_toEndOf="@+id/tv_repositories"
@@ -155,14 +151,13 @@
 
                     <TextView
                         android:id="@+id/tv_following"
+                        style="@style/TextViewStyle.Black.Large"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="8dp"
                         android:layout_marginTop="16dp"
                         android:layout_marginEnd="16dp"
                         android:textAlignment="center"
-                        android:textColor="@color/colorPrimary"
-                        android:textSize="30sp"
                         app:layout_constraintBottom_toTopOf="@+id/tv_label_following"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toEndOf="@+id/tv_followers"
@@ -186,13 +181,13 @@
 
             <androidx.cardview.widget.CardView
                 android:id="@+id/cv_info_place"
+                style="@style/CardViewStyle"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
                 android:layout_marginTop="16dp"
                 android:layout_marginEnd="16dp"
                 app:cardBackgroundColor="@android:color/white"
-                app:cardCornerRadius="10dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/cv_info">
@@ -214,7 +209,7 @@
                         app:layout_constraintTop_toTopOf="parent" />
 
                     <View
-                        android:id="@+id/line"
+                        android:id="@+id/place_line"
                         android:layout_width="wrap_content"
                         android:layout_height="2dp"
                         android:layout_marginTop="16dp"
@@ -231,15 +226,15 @@
                         android:contentDescription="@string/icon"
                         android:src="@drawable/ic_work_black_24dp"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@+id/line" />
+                        app:layout_constraintTop_toBottomOf="@+id/place_line" />
 
                     <TextView
                         android:id="@+id/tv_company_label"
+                        style="@style/TextViewStyle.Black"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="8dp"
                         android:text="@string/label_company"
-                        android:textColor="@color/colorPrimary"
                         app:layout_constraintBottom_toBottomOf="@+id/icon_company"
                         app:layout_constraintStart_toEndOf="@+id/icon_company"
                         app:layout_constraintTop_toTopOf="@+id/icon_company" />
@@ -266,11 +261,11 @@
 
                     <TextView
                         android:id="@+id/tv_location_label"
+                        style="@style/TextViewStyle.Black"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="8dp"
                         android:text="@string/label_location"
-                        android:textColor="@color/colorPrimary"
                         app:layout_constraintBottom_toBottomOf="@+id/icon_location"
                         app:layout_constraintStart_toEndOf="@id/icon_location"
                         app:layout_constraintTop_toTopOf="@id/icon_location" />
@@ -291,13 +286,13 @@
 
             <androidx.cardview.widget.CardView
                 android:id="@+id/cv_follow"
+                style="@style/CardViewStyle"
                 android:layout_width="0dp"
                 android:layout_height="340dp"
                 android:layout_marginStart="16dp"
                 android:layout_marginTop="16dp"
                 android:layout_marginEnd="16dp"
                 android:layout_marginBottom="16dp"
-                app:cardCornerRadius="10dp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.0"

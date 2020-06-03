@@ -19,4 +19,6 @@
     <string name="label_company">Perusahaan</string>
     <string name="icon">Ikon</string>
     <string name="search_hint">Ketik disini untuk cari pengguna</string>
+    <string name="not_applicable">-</string>
+    <string name="page_detail">Detail Pengguna</string>
 </resources>
