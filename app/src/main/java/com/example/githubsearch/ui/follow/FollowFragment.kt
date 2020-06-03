@@ -45,19 +45,19 @@ class FollowFragment : Fragment() {
         super.onActivityCreated(savedInstanceState)
 
         // views that can show before or after data
-        val viewsInfo: ArrayList<View> = arrayListOf(
+        val viewsInfo = arrayListOf<View>(
             info_view
         )
         // views to show when request data
-        val viewsBeforeData: ArrayList<View> = arrayListOf(
+        val viewsBeforeData = arrayListOf<View>(
             progress_bar
         )
         // views to show when data received and not empty
-        val viewsExistData: ArrayList<View> = arrayListOf(
+        val viewsExistData = arrayListOf<View>(
             rv_users
         )
         // views to hide when request data
-        val viewsAfterData = ArrayList<View>().apply {
+        val viewsAfterData = arrayListOf<View>().apply {
             addAll(viewsExistData)
             addAll(viewsInfo)
         }

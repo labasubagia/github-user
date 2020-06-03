@@ -37,19 +37,19 @@ class HomeFragment : Fragment() {
 
 
         // views that can show before or after data
-        val viewsInfo: ArrayList<View> = arrayListOf(
+        val viewsInfo = arrayListOf<View>(
             info_view
         )
         // views to show when request data
-        val viewsBeforeData: ArrayList<View> = arrayListOf(
+        val viewsBeforeData = arrayListOf<View>(
             progress_bar
         )
         // views to show after data received and data exist
-        val viewsExistData: ArrayList<View> = arrayListOf(
+        val viewsExistData = arrayListOf<View>(
             rv_users
         )
         // views to hide when request data
-        val viewsAfterData = ArrayList<View>().apply {
+        val viewsAfterData = arrayListOf<View>().apply {
             addAll(viewsExistData)
             addAll(viewsInfo)
         }
