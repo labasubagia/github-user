@@ -17,6 +17,8 @@ android {
         versionCode 1
         versionName "1.0"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+
+        buildConfigField("String", "TOKEN", "2ce6133b8bd727ae7367c63f23a5c3283f23738c")
     }
     buildTypes {
         release {

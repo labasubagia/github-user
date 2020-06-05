@@ -1,5 +1,6 @@
 package com.example.githubsearch.network
 
+import com.example.githubsearch.BuildConfig
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
@@ -11,7 +12,6 @@ class NetworkConfig {
     // config
     companion object {
         private const val BASE_URL = "https://api.github.com/"
-        private const val TOKEN = "2ce6133b8bd727ae7367c63f23a5c3283f23738c"
     }
 
     private fun getHttpClient(): OkHttpClient {
@@ -29,7 +29,7 @@ class NetworkConfig {
                 // add github api token
                 val originalRequest = chain.request()
                 val request = originalRequest.newBuilder()
-                    .addHeader("Authorization", "token $TOKEN")
+                    .addHeader("Authorization", "token ${BuildConfig.TOKEN}")
                     .build()
                 chain.proceed(request)
             }
