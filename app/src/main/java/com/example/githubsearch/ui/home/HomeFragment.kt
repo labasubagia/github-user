@@ -78,14 +78,13 @@ class HomeFragment : Fragment() {
             adapter = userListAdapter
         }
 
-
         // search view
         sv_user.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
             // on submit: send search user request
             override fun onQueryTextSubmit(query: String?): Boolean {
                 showView(viewsBeforeData)
                 showView(viewsAfterData, false)
-                viewModel.searchUsers(query as String)
+                viewModel.search(query as String)
                 return true
             }
 
@@ -139,7 +138,7 @@ class HomeFragment : Fragment() {
         viewModel.apply {
 
             // get users that found from search
-            getFoundUsers().observe(viewLifecycleOwner, Observer { foundUsers ->
+            found.observe(viewLifecycleOwner, Observer { foundUsers ->
                 foundUsers?.let {
                     if (it.total_count == 0) {
                         setInfoView(
@@ -158,7 +157,7 @@ class HomeFragment : Fragment() {
             })
 
             // get error
-            getError().observe(viewLifecycleOwner, Observer {
+            error.observe(viewLifecycleOwner, Observer {
                 it?.let {
                     setInfoViewAsErrorView(info_view, it)
                     showView(viewsInfo)

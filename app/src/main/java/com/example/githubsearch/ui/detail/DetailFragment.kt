@@ -106,15 +106,12 @@ class DetailFragment : Fragment() {
             ViewModelProvider.NewInstanceFactory()
         ).get(DetailViewModel::class.java)
 
-        // request user detail
-        viewModel.setUserDetail(username)
-
 
         // get view model data
         viewModel.apply {
 
             // user's detail
-            getUserDetail().observe(viewLifecycleOwner, Observer { user ->
+            getDetail(username).observe(viewLifecycleOwner, Observer { user ->
                 user?.let {
 
                     val login = "@${it.login}"
@@ -141,7 +138,7 @@ class DetailFragment : Fragment() {
             })
 
             // error
-            getError().observe(viewLifecycleOwner, Observer {
+            error.observe(viewLifecycleOwner, Observer {
                 it?.let {
                     setInfoViewAsErrorView(info_view, it)
                     showView(viewsInfo)

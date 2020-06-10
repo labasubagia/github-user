@@ -78,20 +78,6 @@ class FollowFragment : Fragment() {
         ).get(FollowViewModel::class.java)
 
 
-        // set users request type
-        fun setUsers() = when (type) {
-            TYPE_FOLLOWERS -> viewModel.setUserFollower(username.toString())
-            TYPE_FOLLOWING -> viewModel.setUserFollowing(username.toString())
-            else -> null
-        }
-
-        // set get users type
-        fun getUsers() = when (type) {
-            TYPE_FOLLOWERS -> viewModel.getUserFollowers()
-            TYPE_FOLLOWING -> viewModel.getUserFollowing()
-            else -> null
-        }
-
         // set info view resources
         var imgInfoResource = 0
         var textInfoResource = 0
@@ -108,29 +94,29 @@ class FollowFragment : Fragment() {
 
 
         // run function
-        setUsers()
         showView(viewsBeforeData)
         showView(viewsAfterData, false)
-        getUsers()?.observe(this, Observer {
-            it?.let {
-                if (it.size == 0) {
-                    setInfoView(info_view, imgInfoResource, textInfoResource)
-                    showView(viewsInfo)
-                } else {
-                    adapter.setUsers(it)
-                    showView(viewsExistData)
-                }
-            }
-            showView(viewsBeforeData, false)
-        })
 
-        // get error
-        viewModel.getError().observe(this, Observer {
-            it?.let {
-                setInfoViewAsErrorView(info_view, it)
-                showView(viewsInfo)
-                showView(viewsBeforeData, false)
-            }
-        })
+        viewModel.apply {
+            follow(username as String, type as String).observe(viewLifecycleOwner, Observer {
+                it?.let {
+                    if (it.size == 0) {
+                        setInfoView(info_view, imgInfoResource, textInfoResource)
+                        showView(viewsInfo)
+                    } else {
+                        adapter.setUsers(it)
+                        showView(viewsExistData)
+                    }
+                    showView(viewsBeforeData, false)
+                }
+            })
+            error(type as String).observe(viewLifecycleOwner, Observer {
+                it?.let {
+                    setInfoViewAsErrorView(info_view, it)
+                    showView(viewsInfo)
+                    showView(viewsBeforeData, false)
+                }
+            })
+        }
     }
 }
