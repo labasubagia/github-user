@@ -21,4 +21,9 @@
     <string name="search_hint">Ketik disini untuk cari pengguna</string>
     <string name="not_applicable">-</string>
     <string name="page_detail">Detail Pengguna</string>
+    <string name="menu_favorite">Favorit</string>
+    <string name="menu_setting">Pengaturan</string>
+    <string name="page_favorite_list">Pengguna Favorit</string>
+    <string name="message_add_favorite_success">Tambah ke favorit sukses!</string>
+    <string name="message_add_favorite_failed">Tambah ke favorit gagal!</string>
 </resources>

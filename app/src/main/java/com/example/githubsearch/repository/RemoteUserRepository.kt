@@ -13,14 +13,18 @@ import retrofit2.Callback
 import retrofit2.Response
 import com.example.githubsearch.model.UserDetail as Detail
 
-class UserRepository private constructor() {
+class RemoteUserRepository private constructor() {
 
+    // make singleton
     companion object {
-        val instance by lazy { UserRepository() }
+        val instance by lazy { RemoteUserRepository() }
     }
 
+    // retrofit
     private val webservice = NetworkConfig().api()
 
+
+    // data & error
     val detail = MutableLiveData<Detail>()
     val detailError = MutableLiveData<CustomError>()
 
@@ -34,6 +38,7 @@ class UserRepository private constructor() {
     val foundError = MutableLiveData<CustomError>()
 
 
+    // get detail of user by username (login field)
     fun getDetail(username: String): LiveData<Detail> {
         detailError.value = null
         detail.value = null
@@ -54,6 +59,7 @@ class UserRepository private constructor() {
         return detail
     }
 
+    // follower by username (login field)
     fun getFollowers(username: String): LiveData<ArrayList<User>> {
         followersError.value = null
         followers.value = null
@@ -76,6 +82,7 @@ class UserRepository private constructor() {
         return followers
     }
 
+    // following by username (login field)
     fun getFollowing(username: String): LiveData<ArrayList<User>> {
         following.value = null
         followingError.value = null
@@ -98,6 +105,7 @@ class UserRepository private constructor() {
         return following
     }
 
+    // search user by username (login field)
     fun getFound(username: String): LiveData<Search> {
         foundError.value = null
         found.value = null

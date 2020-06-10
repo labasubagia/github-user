@@ -6,6 +6,8 @@ import android.view.LayoutInflater
 import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.view.isGone
+import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
@@ -14,14 +16,19 @@ import com.bumptech.glide.Glide
 import com.example.githubsearch.R
 import com.example.githubsearch.activity.main.MainActivity
 import com.example.githubsearch.adapter.FollowPagerAdapter
+import com.example.githubsearch.model.UserDetail
 import com.example.githubsearch.util.Util.numberFormat
 import com.example.githubsearch.util.UtilView.setInfoViewAsErrorView
 import com.example.githubsearch.util.UtilView.showView
+import com.google.android.material.snackbar.Snackbar
 import kotlinx.android.synthetic.main.fragment_detail.*
 
 class DetailFragment : Fragment() {
 
     private lateinit var viewModel: DetailViewModel
+
+    // user to add to favorite
+    private var detail: UserDetail? = null
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -97,23 +104,24 @@ class DetailFragment : Fragment() {
 
         // set view visibility when request data
         showView(viewsBeforeData)
+        showView(fab_add, false)
         showView(viewsAfterData, false)
 
 
         // detail view model
-        viewModel = ViewModelProvider(
-            this,
-            ViewModelProvider.NewInstanceFactory()
-        ).get(DetailViewModel::class.java)
-
+        viewModel = ViewModelProvider(requireActivity()).get(DetailViewModel::class.java)
 
         // get view model data
         viewModel.apply {
 
             // user's detail
-            getDetail(username).observe(viewLifecycleOwner, Observer { user ->
+            getRemoteDetail(username).observe(viewLifecycleOwner, Observer { user ->
                 user?.let {
 
+                    // add user local data, for add to favorite
+                    detail = user
+
+                    // modify some data just for view
                     val login = "@${it.login}"
                     val notApplicable = getString(R.string.not_applicable)
 
@@ -134,6 +142,11 @@ class DetailFragment : Fragment() {
                     // set views visibility after data received
                     showView(viewsBeforeData, false)
                     showView(viewsExistData)
+
+                    if (progress_bar.isGone) {
+                        // check user is favorite user or not
+                        viewModel.checkLocalFavorite(username)
+                    }
                 }
             })
 
@@ -145,6 +158,39 @@ class DetailFragment : Fragment() {
                     showView(viewsBeforeData, false)
                 }
             })
+
+            // check user is favorite
+            foundUserFavorite.observe(viewLifecycleOwner, Observer {
+                if (it != null || progress_bar.isVisible) {
+                    showView(fab_add, false)
+                } else {
+                    showView(fab_add)
+                }
+            })
+
+            // check add favorite success
+            isInsertSuccess.observe(viewLifecycleOwner, Observer {
+                it?.let {
+                    val message: String
+
+                    if (it) {
+                        message = getString(R.string.message_add_favorite_success)
+                        showView(fab_add, false)
+                    } else message = getString(R.string.message_add_favorite_failed)
+
+                    Snackbar.make(view as View, message, Snackbar.LENGTH_LONG)
+                        .show()
+
+                    // reset status
+                    viewModel.isInsertSuccess.postValue(null)
+                }
+            })
+        }
+
+        fab_add.setOnClickListener {
+            detail?.let {
+                viewModel.addLocalFavorite(it)
+            }
         }
     }
 }

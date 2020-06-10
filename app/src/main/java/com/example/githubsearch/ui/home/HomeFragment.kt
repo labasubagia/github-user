@@ -1,11 +1,10 @@
 package com.example.githubsearch.ui.home
 
 import android.os.Bundle
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
+import android.view.*
 import android.widget.ImageView
 import android.widget.SearchView
+import android.widget.Toast
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
@@ -30,6 +29,11 @@ class HomeFragment : Fragment() {
     ): View? {
         activity?.title = getString(R.string.app_name)
         return inflater.inflate(R.layout.fragment_home, container, false)
+    }
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setHasOptionsMenu(true)
     }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
@@ -69,6 +73,7 @@ class HomeFragment : Fragment() {
                             findNavController().navigate(it)
                         }
                 }
+
             })
         }
         // recycler view
@@ -164,6 +169,25 @@ class HomeFragment : Fragment() {
                     showView(viewsBeforeData, false)
                 }
             })
+        }
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+        inflater.inflate(R.menu.options_menu, menu)
+        super.onCreateOptionsMenu(menu, inflater)
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        return when (item.itemId) {
+            R.id.menu_favorite -> {
+                findNavController().navigate(R.id.action_homeFragment_to_favoriteFragment)
+                return true
+            }
+            R.id.menu_setting -> {
+                Toast.makeText(context, "To Setting", Toast.LENGTH_SHORT).show()
+                return true
+            }
+            else -> true
         }
     }
 

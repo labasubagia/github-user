@@ -20,4 +20,9 @@
     <string name="search_hint">Type here to search user</string>
     <string name="not_applicable">N/A</string>
     <string name="page_detail">User Detail</string>
+    <string name="menu_favorite">Favorite</string>
+    <string name="menu_setting">Setting</string>
+    <string name="page_favorite_list">Favorite Users</string>
+    <string name="message_add_favorite_success">Add to favorite success!</string>
+    <string name="message_add_favorite_failed">Add to favorite failed!</string>
 </resources>

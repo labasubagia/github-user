@@ -5,19 +5,24 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Transformations
 import androidx.lifecycle.ViewModel
 import com.example.githubsearch.model.CustomError
-import com.example.githubsearch.repository.UserRepository
+import com.example.githubsearch.repository.RemoteUserRepository
 
 class HomeViewModel : ViewModel() {
 
-    private val repository = UserRepository.instance
-
+    // remote data
+    private val remoteUserRepository = RemoteUserRepository.instance
     private val username = MutableLiveData<String>()
 
-    val found = Transformations.switchMap(username) {
-        repository.getFound(it)
-    }
-    val error: LiveData<CustomError> = repository.foundError
 
+    // found search
+    val found = Transformations.switchMap(username) {
+        remoteUserRepository.getFound(it)
+    }
+
+    // error
+    val error: LiveData<CustomError> = remoteUserRepository.foundError
+
+    // search
     fun search(username: String) {
         this.username.value = username
     }
