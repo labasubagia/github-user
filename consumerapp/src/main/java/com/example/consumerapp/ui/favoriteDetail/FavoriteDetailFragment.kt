@@ -1,7 +1,6 @@
-package com.example.githubsearch.ui.favoriteDetail
+package com.example.consumerapp.ui.favoriteDetail
 
 import android.app.AlertDialog
-import android.content.Context
 import android.content.DialogInterface
 import android.os.Bundle
 import android.view.*
@@ -10,12 +9,12 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import com.bumptech.glide.Glide
-import com.example.githubsearch.R
-import com.example.githubsearch.activity.main.MainActivity
-import com.example.githubsearch.adapter.FollowPagerAdapter
-import com.example.githubsearch.model.UserDetail
-import com.example.githubsearch.util.Util
-import com.example.githubsearch.util.UtilView.showView
+import com.example.consumerapp.R
+import com.example.consumerapp.activity.main.MainActivity
+import com.example.consumerapp.model.UserDetail
+import com.example.consumerapp.ui.FavoriteViewModelFactory
+import com.example.consumerapp.util.Util.numberFormat
+import com.example.consumerapp.util.UtilView.showView
 import com.google.android.material.snackbar.Snackbar
 import kotlinx.android.synthetic.main.layout_detail.*
 
@@ -34,6 +33,15 @@ class FavoriteDetailFragment : Fragment() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setOptionMenu()
+    }
+
+    override fun onDestroy() {
+        val activity = activity as? MainActivity
+        // remove back to home
+        activity?.supportActionBar?.setDisplayHomeAsUpEnabled(false)
+        setHasOptionsMenu(false)
+
+        super.onDestroy()
     }
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
@@ -59,25 +67,18 @@ class FavoriteDetailFragment : Fragment() {
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
 
+        // navigation args
+        val username = FavoriteDetailFragmentArgs.fromBundle(arguments as Bundle).username
+
         showView(arrayListOf(fab_add, info_view, scroll_view), false)
         showView(progress_bar)
 
-        // navigation arguments
-        val username = FavoriteDetailFragmentArgs.fromBundle(arguments as Bundle).username
-
-        // set follow tabs
-        val tabFollowPagerAdapter =
-            FollowPagerAdapter(context as Context, childFragmentManager).apply {
-                setUsername(username)
-            }
-        tab_follow_pager.adapter = tabFollowPagerAdapter
-        tab_follow.setupWithViewPager(tab_follow_pager)
-
         // view model
-        viewModel = ViewModelProvider(this).get(FavoriteDetailViewModel::class.java)
+        val factory = FavoriteViewModelFactory(requireContext())
+        viewModel = ViewModelProvider(this, factory).get(FavoriteDetailViewModel::class.java)
 
         // get user detail
-        viewModel.searchDetail(username)
+        viewModel.search(username)
 
         viewModel.apply {
 
@@ -98,9 +99,9 @@ class FavoriteDetailFragment : Fragment() {
                         .into(img_avatar)
                     tv_name.text = it.name
                     tv_username.text = login
-                    tv_repositories.text = Util.numberFormat(it.public_repos)
-                    tv_followers.text = Util.numberFormat(it.followers)
-                    tv_following.text = Util.numberFormat(it.following)
+                    tv_repositories.text = numberFormat(it.public_repos)
+                    tv_followers.text = numberFormat(it.followers)
+                    tv_following.text = numberFormat(it.following)
                     tv_location.text = it.location ?: notApplicable
                     tv_company.text = it.company ?: notApplicable
 
@@ -148,7 +149,7 @@ class FavoriteDetailFragment : Fragment() {
             setMessage(getString(R.string.dialog_delete_message))
             setPositiveButton(getString(R.string.dialog_yes)) { _: DialogInterface?, _: Int ->
                 userToDelete?.let {
-                    viewModel.deleteFavorite(it)
+                    viewModel.delete(it)
                 }
             }
             setNegativeButton(getString(R.string.dialog_no)) { dialog: DialogInterface?, _: Int ->

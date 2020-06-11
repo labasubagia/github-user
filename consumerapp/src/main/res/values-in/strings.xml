@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Pengguna Github</string>
+    <string name="user_not_found">Tidak Ada Data Ditemukan</string>
+    <string name="label_followers">Pengikut</string>
+    <string name="label_following">Mengikuti</string>
+    <string name="label_repositories">Repositori</string>
+    <string name="request_network_failure">Harap periksa koneksi anda dan coba lagi nanti</string>
+    <string name="request_api_problem">Terjadi kesalahan server, harap coba lagi nanti</string>
+    <string name="request_unknown_fail">Terjadi error yang tidak diketahui, mohon coba nanti</string>
+    <string name="request_error_label">Kesalahan</string>
+    <string name="background_profile">Latar Belakang Profil</string>
+    <string name="follower_zero">Pengguna tidak diikuti siapapun</string>
+    <string name="following_zero">Pengguna tidak mengikuti siapapun</string>
+    <string name="label_places">Tempat</string>
+    <string name="image_info">Gambar  Info</string>
+    <string name="search_user_info">Anda bisa mencari pengguna github</string>
+    <string name="label_location">Lokasi</string>
+    <string name="label_company">Perusahaan</string>
+    <string name="icon">Ikon</string>
+    <string name="search_hint">Ketik disini untuk cari pengguna</string>
+    <string name="not_applicable">-</string>
+    <string name="page_detail">Detail Pengguna</string>
+    <string name="menu_favorite">Favorit</string>
+    <string name="menu_setting">Pengaturan</string>
+    <string name="page_favorite_list">Pengguna Favorit</string>
+    <string name="message_add_favorite_success">Tambah ke favorit sukses!</string>
+    <string name="message_add_favorite_failed">Tambah ke favorit gagal!</string>
+    <string name="page_favorite_detail">Detail Pengguna Favorit</string>
+    <string name="menu_delete">Hapus</string>
+    <string name="dialog_delete_title">Hapus</string>
+    <string name="dialog_delete_message">Yakin hapus?</string>
+    <string name="message_delete_favorite_success">Hapus pengguna favorit sukses!</string>
+    <string name="message_delete_favorite_failed">Hapus pengguna favorit gagal!</string>
+    <string name="dialog_yes">Ya</string>
+    <string name="dialog_no">Tidak</string>
+    <string name="preference_reminder_text">Pengingat pukul 09.00</string>
+    <string name="preference_language_text">Pilih Bahasa</string>
+    <string-array name="preference_language_option">
+        <item>@string/language_english</item>
+        <item>@string/language_indonesia</item>
+    </string-array>
+    <string name="page_preference">Pengaturan</string>
+    <string name="message_language_change">Bahasa dirubah ke %s!</string>
+    <string name="message_reminder_change_active">Pengingat aktif!</string>
+    <string name="message_reminder_change_deactivate">Pengingat nonaktif!</string>
+</resources>

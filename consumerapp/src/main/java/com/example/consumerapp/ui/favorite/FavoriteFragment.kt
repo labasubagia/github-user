@@ -1,8 +1,7 @@
-package com.example.githubsearch.ui.favorite
+package com.example.consumerapp.ui.favorite
 
 import android.os.Bundle
 import android.view.LayoutInflater
-import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
@@ -10,12 +9,12 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.example.githubsearch.R
-import com.example.githubsearch.activity.main.MainActivity
-import com.example.githubsearch.adapter.FavoriteListAdapter
-import com.example.githubsearch.model.UserDetail
-import com.example.githubsearch.util.UtilView.setInfoView
-import com.example.githubsearch.util.UtilView.showView
+import com.example.consumerapp.R
+import com.example.consumerapp.adapter.FavoriteListAdapter
+import com.example.consumerapp.model.UserDetail
+import com.example.consumerapp.ui.FavoriteViewModelFactory
+import com.example.consumerapp.util.UtilView.setInfoView
+import com.example.consumerapp.util.UtilView.showView
 import kotlinx.android.synthetic.main.fragment_favorite.*
 
 class FavoriteFragment : Fragment() {
@@ -33,70 +32,44 @@ class FavoriteFragment : Fragment() {
 
     override fun onResume() {
         super.onResume()
-        val activity = activity as? MainActivity
 
         // change action bar title
         activity?.title = getString(R.string.page_favorite_list)
 
-        // show back to home
-        activity?.supportActionBar?.setDisplayHomeAsUpEnabled(true)
         setHasOptionsMenu(true)
-    }
-
-    override fun onDestroy() {
-        val activity = activity as? MainActivity
-        // remove back to home
-        activity?.supportActionBar?.setDisplayHomeAsUpEnabled(false)
-        setHasOptionsMenu(false)
-
-        super.onDestroy()
-    }
-
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        return when (item.itemId) {
-            // back to home
-            android.R.id.home -> {
-                findNavController().navigateUp()
-                true
-            }
-            else -> super.onOptionsItemSelected(item)
-        }
     }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-        viewModel = ViewModelProvider(this).get(FavoriteViewModel::class.java)
+
+        val factory = FavoriteViewModelFactory(requireContext())
+        viewModel = ViewModelProvider(this, factory).get(FavoriteViewModel::class.java)
 
         listSetting()
 
         showView(progress_bar)
 
+        viewModel.setUser()
         viewModel.apply {
-            favorites.observe(viewLifecycleOwner, Observer {
-                it.let { list ->
-                    if (list.isEmpty()) {
-                        setInfoView(
-                            info_view,
-                            R.drawable.ic_undraw_no_data,
-                            R.string.user_not_found
-                        )
-                        showView(info_view)
+            users.observe(viewLifecycleOwner, Observer {
+                if (it.isEmpty()) {
+                    setInfoView(
+                        info_view,
+                        R.drawable.ic_undraw_no_data,
+                        R.string.user_not_found
+                    )
+                    showView(info_view)
 
-                        showView(rv_users, false)
-                        listAdapter.setUsers(ArrayList())
-                    } else {
-                        val arrayList = arrayListOf<UserDetail>()
-                        arrayList.addAll(list)
-                        listAdapter.setUsers(arrayList)
-                        showView(rv_users)
-
-                        showView(info_view, false)
-                    }
-                    showView(progress_bar, false)
+                    showView(rv_users, false)
+                    listAdapter.setUsers(ArrayList())
+                } else {
+                    listAdapter.setUsers(it)
+                    showView(rv_users)
+                    showView(info_view, false)
                 }
+                showView(progress_bar, false)
             })
         }
-
     }
 
     private fun listSetting() {

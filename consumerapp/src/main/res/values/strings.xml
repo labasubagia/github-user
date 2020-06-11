@@ -1,0 +1,52 @@
+<resources>
+    <string name="app_name">Github Users</string>
+    <string name="user_not_found">No Data Found</string>
+    <string name="label_repositories">Repositories</string>
+    <string name="label_followers">Followers</string>
+    <string name="label_following">Following</string>
+    <string name="request_network_failure">Please check your network and try again later</string>
+    <string name="request_api_problem">An error occurs in server, please try again later</string>
+    <string name="request_unknown_fail">An unknown error occurs, please try again later</string>
+    <string name="request_error_label">Error!</string>
+    <string name="background_profile">Background Profile</string>
+    <string name="follower_zero">User not followed by anyone</string>
+    <string name="following_zero">User not follow anyone</string>
+    <string name="label_places">Places</string>
+    <string name="image_info">Image Info</string>
+    <string name="search_user_info">You can search github user</string>
+    <string name="label_company">Company</string>
+    <string name="label_location">Location</string>
+    <string name="icon">Icon</string>
+    <string name="search_hint">Type here to search user</string>
+    <string name="not_applicable">N/A</string>
+    <string name="page_detail">User Detail</string>
+    <string name="menu_favorite">Favorite</string>
+    <string name="menu_setting">Setting</string>
+    <string name="page_favorite_list">Favorite Users</string>
+    <string name="message_add_favorite_success">Add to favorite success!</string>
+    <string name="message_add_favorite_failed">Add to favorite failed!</string>
+    <string name="page_favorite_detail">Favorite User Detail</string>
+    <string name="menu_delete">Delete</string>
+    <string name="dialog_delete_title">Delete</string>
+    <string name="dialog_delete_message">Are you sure delete this?</string>
+    <string name="message_delete_favorite_success">Delete favorite user success!</string>
+    <string name="message_delete_favorite_failed">Delete favorite user failed!</string>
+    <string name="dialog_yes">Yes</string>
+    <string name="dialog_no">No</string>
+    <string name="preference_reminder_key" translatable="false">pref_reminder</string>
+    <string name="preference_language_key" translatable="false">pref_locale</string>
+    <string name="preference_reminder_text">Reminder at 9.00 AM</string>
+    <string name="preference_language_text">Select Language</string>
+    <string-array name="preference_language_option">
+        <item>@string/language_english</item>
+        <item>@string/language_indonesia</item>
+    </string-array>
+    <string name="page_preference">Settings</string>
+    <string name="language_english" translatable="false">English</string>
+    <string name="language_indonesia" translatable="false">Indonesia</string>
+    <string name="language_english_code" translatable="false">en</string>
+    <string name="language_indonesia_code" translatable="false">in</string>
+    <string name="message_language_change">Language changed to %s!</string>
+    <string name="message_reminder_change_active">Reminder is active!</string>
+    <string name="message_reminder_change_deactivate">Reminder is deactivate!</string>
+</resources>

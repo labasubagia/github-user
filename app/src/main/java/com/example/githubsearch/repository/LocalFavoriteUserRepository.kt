@@ -19,4 +19,12 @@ class LocalFavoriteUserRepository(private val favoriteUserDao: FavoriteUserDao) 
     fun searchByUsername(username: String): UserDetail {
         return favoriteUserDao.getByUsername(username)
     }
+
+    // this below for content provider
+
+    fun getAllCursor() = favoriteUserDao.getAllCursor()
+
+    fun searchByUsernameCursor(username: String) = favoriteUserDao.getByUsernameCursor(username)
+
+    fun deleteByUsername(username: String) = favoriteUserDao.deleteByUsername(username)
 }
