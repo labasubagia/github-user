@@ -18,7 +18,7 @@ import com.example.githubsearch.ui.detail.DetailFragmentArgs
 import com.example.githubsearch.util.Util
 import com.example.githubsearch.util.UtilView.showView
 import com.google.android.material.snackbar.Snackbar
-import kotlinx.android.synthetic.main.fragment_detail.*
+import kotlinx.android.synthetic.main.layout_detail.*
 
 class FavoriteDetailFragment : Fragment() {
 

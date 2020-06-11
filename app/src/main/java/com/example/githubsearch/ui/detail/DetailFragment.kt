@@ -22,7 +22,7 @@ import com.example.githubsearch.util.Util.numberFormat
 import com.example.githubsearch.util.UtilView.setInfoViewAsErrorView
 import com.example.githubsearch.util.UtilView.showView
 import com.google.android.material.snackbar.Snackbar
-import kotlinx.android.synthetic.main.fragment_detail.*
+import kotlinx.android.synthetic.main.layout_detail.*
 
 class DetailFragment : Fragment() {
 
