@@ -33,4 +33,20 @@
     <string name="message_delete_favorite_failed">Delete favorite user failed!</string>
     <string name="dialog_yes">Yes</string>
     <string name="dialog_no">No</string>
+    <string name="preference_reminder_key" translatable="false">pref_reminder</string>
+    <string name="preference_language_key" translatable="false">pref_locale</string>
+    <string name="preference_reminder_text">Reminder at 9.00 AM</string>
+    <string name="preference_language_text">Select Language</string>
+    <string-array name="preference_language_option">
+        <item>@string/language_english</item>
+        <item>@string/language_indonesia</item>
+    </string-array>
+    <string name="page_preference">Settings</string>
+    <string name="language_english" translatable="false">English</string>
+    <string name="language_indonesia" translatable="false">Indonesia</string>
+    <string name="language_english_code" translatable="false">en</string>
+    <string name="language_indonesia_code" translatable="false">in</string>
+    <string name="message_language_change">Language changed to %s!</string>
+    <string name="message_reminder_change_active">Reminder is active!</string>
+    <string name="message_reminder_change_deactivate">Reminder is deactivate!</string>
 </resources>

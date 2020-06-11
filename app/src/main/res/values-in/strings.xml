@@ -34,4 +34,14 @@
     <string name="message_delete_favorite_failed">Hapus pengguna favorit gagal!</string>
     <string name="dialog_yes">Ya</string>
     <string name="dialog_no">Tidak</string>
+    <string name="preference_reminder_text">Pengingat pukul 09.00</string>
+    <string name="preference_language_text">Pilih Bahasa</string>
+    <string-array name="preference_language_option">
+        <item>@string/language_english</item>
+        <item>@string/language_indonesia</item>
+    </string-array>
+    <string name="page_preference">Pengaturan</string>
+    <string name="message_language_change">Bahasa dirubah ke %s!</string>
+    <string name="message_reminder_change_active">Pengingat aktif!</string>
+    <string name="message_reminder_change_deactivate">Pengingat nonaktif!</string>
 </resources>

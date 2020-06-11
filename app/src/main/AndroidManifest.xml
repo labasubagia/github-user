@@ -10,10 +10,11 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
+        android:fullBackupContent="true"
         android:usesCleartextTraffic="true">
         <activity
             android:name=".activity.main.MainActivity"
-            android:configChanges="orientation|screenSize|smallestScreenSize|screenLayout">
+            android:configChanges="orientation|screenSize|smallestScreenSize|screenLayout|locale">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

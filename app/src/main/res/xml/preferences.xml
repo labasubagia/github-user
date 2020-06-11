@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.preference.PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <CheckBoxPreference
+        android:icon="@drawable/ic_notifications_black_24dp"
+        android:key="@string/preference_reminder_key"
+        android:title="@string/preference_reminder_text" />
+    <ListPreference
+        android:entries="@array/preference_language_option"
+        android:entryValues="@array/preference_language_option"
+        android:icon="@drawable/ic_g_translate_black_24dp"
+        android:key="@string/preference_language_key"
+        android:summary="%s"
+        android:title="@string/preference_language_text" />
+</androidx.preference.PreferenceScreen>

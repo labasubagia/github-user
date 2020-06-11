@@ -4,16 +4,18 @@ import android.os.Bundle
 import android.view.*
 import android.widget.ImageView
 import android.widget.SearchView
-import android.widget.Toast
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
+import androidx.preference.PreferenceManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.githubsearch.R
 import com.example.githubsearch.adapter.UserListAdapter
 import com.example.githubsearch.model.User
+import com.example.githubsearch.util.Util.getDefaultLanguage
+import com.example.githubsearch.util.Util.setLanguage
 import com.example.githubsearch.util.UtilView.setInfoView
 import com.example.githubsearch.util.UtilView.setInfoViewAsErrorView
 import com.example.githubsearch.util.UtilView.showView
@@ -34,6 +36,7 @@ class HomeFragment : Fragment() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setHasOptionsMenu(true)
+        settingLanguage()
     }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
@@ -184,7 +187,7 @@ class HomeFragment : Fragment() {
                 return true
             }
             R.id.menu_setting -> {
-                Toast.makeText(context, "To Setting", Toast.LENGTH_SHORT).show()
+                findNavController().navigate(R.id.action_homeFragment_to_preferenceFragment)
                 return true
             }
             else -> true
@@ -195,5 +198,16 @@ class HomeFragment : Fragment() {
     private fun showInfoView() {
         setInfoView(info_view, R.drawable.ic_undraw_people_search, R.string.search_user_info)
         showView(info_view)
+    }
+
+    private fun settingLanguage() {
+        // read from shared preference
+        // if not set, use system language (default english)
+        val preference = PreferenceManager.getDefaultSharedPreferences(context)
+        val language = preference.getString(
+            getString(R.string.preference_language_key),
+            getDefaultLanguage(requireContext())
+        )
+        setLanguage(requireContext(), language as String)
     }
 }
