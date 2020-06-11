@@ -15,8 +15,9 @@ class FavoriteViewModel(application: Application) : AndroidViewModel(application
 
     // init room
     init {
-        val favoriteUserDao = LocalDatabase.getDatabase(application).favoriteUserDao()
-        localFavoriteUserRepository = LocalFavoriteUserRepository(favoriteUserDao)
+        LocalDatabase.getDatabase(application).favoriteUserDao().apply {
+            localFavoriteUserRepository = LocalFavoriteUserRepository(this)
+        }
         favorites = localFavoriteUserRepository.favorites
     }
 }

@@ -5,7 +5,6 @@ import android.view.LayoutInflater
 import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
@@ -28,6 +27,12 @@ class FavoriteFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
+        return inflater.inflate(R.layout.fragment_favorite, container, false)
+    }
+
+
+    override fun onResume() {
+        super.onResume()
         val activity = activity as? MainActivity
 
         // change action bar title
@@ -36,19 +41,15 @@ class FavoriteFragment : Fragment() {
         // show back to home
         activity?.supportActionBar?.setDisplayHomeAsUpEnabled(true)
         setHasOptionsMenu(true)
-
-        return inflater.inflate(R.layout.fragment_favorite, container, false)
     }
 
-    override fun onDestroyView() {
-
+    override fun onDestroy() {
         val activity = activity as? MainActivity
-
         // remove back to home
         activity?.supportActionBar?.setDisplayHomeAsUpEnabled(false)
         setHasOptionsMenu(false)
 
-        super.onDestroyView()
+        super.onDestroy()
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
@@ -80,10 +81,16 @@ class FavoriteFragment : Fragment() {
                             R.string.user_not_found
                         )
                         showView(info_view)
+
+                        showView(rv_users, false)
+                        listAdapter.setUsers(ArrayList())
                     } else {
                         val arrayList = arrayListOf<UserDetail>()
                         arrayList.addAll(list)
                         listAdapter.setUsers(arrayList)
+                        showView(rv_users)
+
+                        showView(info_view, false)
                     }
                     showView(progress_bar, false)
                 }
@@ -99,9 +106,13 @@ class FavoriteFragment : Fragment() {
             // item view on click listener
             setOnItemClickCallback(object : FavoriteListAdapter.OnItemClickCallback {
                 // on click: move to detail fragment and send username
-                override fun onItemClicked(user: UserDetail) {
-                    Toast.makeText(context, "User ${user.login}", Toast.LENGTH_SHORT).show()
-                }
+                override fun onItemClicked(user: UserDetail) =
+                    FavoriteFragmentDirections.actionFavoriteFragmentToFavoriteDetailFragment()
+                        .apply {
+                            username = user.login
+                        }.let {
+                            findNavController().navigate(it)
+                        }
             })
         }
 

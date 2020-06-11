@@ -7,6 +7,7 @@ import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
 import androidx.core.view.isGone
+import androidx.core.view.isInvisible
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
@@ -143,7 +144,7 @@ class DetailFragment : Fragment() {
                     showView(viewsBeforeData, false)
                     showView(viewsExistData)
 
-                    if (progress_bar.isGone) {
+                    if (progress_bar.isGone || progress_bar.isInvisible) {
                         // check user is favorite user or not
                         viewModel.checkLocalFavorite(username)
                     }

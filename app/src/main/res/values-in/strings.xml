@@ -26,4 +26,12 @@
     <string name="page_favorite_list">Pengguna Favorit</string>
     <string name="message_add_favorite_success">Tambah ke favorit sukses!</string>
     <string name="message_add_favorite_failed">Tambah ke favorit gagal!</string>
+    <string name="page_favorite_detail">Detail Pengguna Favorit</string>
+    <string name="menu_delete">Hapus</string>
+    <string name="dialog_delete_title">Hapus</string>
+    <string name="dialog_delete_message">Yakin hapus?</string>
+    <string name="message_delete_favorite_success">Hapus pengguna favorit sukses!</string>
+    <string name="message_delete_favorite_failed">Hapus pengguna favorit gagal!</string>
+    <string name="dialog_yes">Ya</string>
+    <string name="dialog_no">Tidak</string>
 </resources>

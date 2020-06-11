@@ -6,7 +6,7 @@ import com.example.githubsearch.model.UserDetail
 
 class LocalFavoriteUserRepository(private val favoriteUserDao: FavoriteUserDao) {
 
-    val favorites: LiveData<List<UserDetail>> = favoriteUserDao.getAll()
+    var favorites: LiveData<List<UserDetail>> = favoriteUserDao.getAll()
 
     fun insert(user: UserDetail) {
         favoriteUserDao.insert(user)
