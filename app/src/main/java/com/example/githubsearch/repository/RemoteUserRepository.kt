@@ -6,8 +6,8 @@ import com.example.githubsearch.model.CustomError
 import com.example.githubsearch.model.Search
 import com.example.githubsearch.model.User
 import com.example.githubsearch.network.NetworkConfig
-import com.example.githubsearch.util.Util.getClientError
-import com.example.githubsearch.util.Util.getServerError
+import com.example.githubsearch.util.UtilError.getClientError
+import com.example.githubsearch.util.UtilError.getServerError
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response

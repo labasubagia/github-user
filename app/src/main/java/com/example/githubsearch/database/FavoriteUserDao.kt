@@ -22,10 +22,10 @@ interface FavoriteUserDao {
     fun getByUsernameCursor(username: String): Cursor
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    fun insert(user: UserDetail)
+    fun insert(user: UserDetail): Long
 
     @Delete
-    fun delete(user: UserDetail)
+    fun delete(user: UserDetail): Int
 
     @Query("DELETE FROM $TABLE_NAME WHERE $LOGIN = :username")
     fun deleteByUsername(username: String): Int

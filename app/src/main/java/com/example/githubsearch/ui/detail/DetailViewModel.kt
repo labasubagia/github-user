@@ -13,37 +13,36 @@ import kotlinx.coroutines.launch
 
 class DetailViewModel(application: Application) : AndroidViewModel(application) {
 
-    // local repository and local data
-    private val localFavoriteUserRepo: LocalFavoriteUserRepository
-    val foundUserFavorite = MutableLiveData<UserDetail>()
-    val isInsertSuccess = MutableLiveData<Boolean>()
+    // Remote Repository
+    private val remoteUserRepository = RemoteUserRepository.instance
 
-    // remote repository and remote data
-    private val remoteUserRepo = RemoteUserRepository.instance
-    val error = remoteUserRepo.detailError
+    val error = remoteUserRepository.detailError
 
-    // init room
+    fun getRemoteDetail(username: String) =
+        remoteUserRepository.getDetail(username)
+
+
+    // Local Repository
+    private val localFavoriteUserRepository: LocalFavoriteUserRepository
+
+    val userFavorite = MutableLiveData<UserDetail>()
+    val isInserted = MutableLiveData<Boolean>()
+
+    fun addLocalFavorite(user: UserDetail) =
+        viewModelScope.launch(Dispatchers.IO) {
+            val insert = localFavoriteUserRepository.insert(user)
+            isInserted.postValue(insert > 0)
+        }
+
+    fun checkLocalFavorite(username: String) =
+        viewModelScope.launch(Dispatchers.IO) {
+            userFavorite.postValue(localFavoriteUserRepository.getByUsername(username))
+        }
+
+
+    // Init Room For Local Repository
     init {
         val favoriteUserDao = LocalDatabase.getDatabase(application).favoriteUserDao()
-        localFavoriteUserRepo = LocalFavoriteUserRepository(favoriteUserDao)
-    }
-
-    // remote detail data
-    fun getRemoteDetail(username: String) = remoteUserRepo.getDetail(username)
-
-
-    // local
-    fun addLocalFavorite(user: UserDetail) = viewModelScope.launch(Dispatchers.IO) {
-        try {
-            localFavoriteUserRepo.insert(user)
-            isInsertSuccess.postValue(true)
-        } catch (e: Throwable) {
-            isInsertSuccess.postValue(false)
-        }
-    }
-
-    // local
-    fun checkLocalFavorite(username: String) = viewModelScope.launch(Dispatchers.IO) {
-        foundUserFavorite.postValue(localFavoriteUserRepo.searchByUsername(username))
+        localFavoriteUserRepository = LocalFavoriteUserRepository(favoriteUserDao)
     }
 }

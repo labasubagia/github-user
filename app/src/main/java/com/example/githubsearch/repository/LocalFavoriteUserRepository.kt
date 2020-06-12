@@ -8,23 +8,23 @@ class LocalFavoriteUserRepository(private val favoriteUserDao: FavoriteUserDao) 
 
     var favorites: LiveData<List<UserDetail>> = favoriteUserDao.getAll()
 
-    fun insert(user: UserDetail) {
+    fun insert(user: UserDetail) =
         favoriteUserDao.insert(user)
-    }
 
-    fun delete(user: UserDetail) {
+    fun delete(user: UserDetail) =
         favoriteUserDao.delete(user)
-    }
 
-    fun searchByUsername(username: String): UserDetail {
-        return favoriteUserDao.getByUsername(username)
-    }
+    fun getByUsername(username: String) =
+        favoriteUserDao.getByUsername(username)
 
-    // this below for content provider
+
+    // For Content Provider
 
     fun getAllCursor() = favoriteUserDao.getAllCursor()
 
-    fun searchByUsernameCursor(username: String) = favoriteUserDao.getByUsernameCursor(username)
+    fun searchByUsernameCursor(username: String) =
+        favoriteUserDao.getByUsernameCursor(username)
 
-    fun deleteByUsername(username: String) = favoriteUserDao.deleteByUsername(username)
+    fun deleteByUsername(username: String) =
+        favoriteUserDao.deleteByUsername(username)
 }

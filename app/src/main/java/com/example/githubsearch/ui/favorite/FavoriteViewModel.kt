@@ -9,11 +9,10 @@ import com.example.githubsearch.repository.LocalFavoriteUserRepository
 
 class FavoriteViewModel(application: Application) : AndroidViewModel(application) {
 
-    // local data
     private val localFavoriteUserRepository: LocalFavoriteUserRepository
+
     val favorites: LiveData<List<UserDetail>>
 
-    // init room
     init {
         LocalDatabase.getDatabase(application).favoriteUserDao().apply {
             localFavoriteUserRepository = LocalFavoriteUserRepository(this)

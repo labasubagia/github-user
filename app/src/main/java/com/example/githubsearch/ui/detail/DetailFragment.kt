@@ -15,10 +15,10 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import com.bumptech.glide.Glide
 import com.example.githubsearch.R
-import com.example.githubsearch.activity.main.MainActivity
 import com.example.githubsearch.adapter.FollowPagerAdapter
 import com.example.githubsearch.model.UserDetail
 import com.example.githubsearch.util.Util.numberFormat
+import com.example.githubsearch.util.UtilFragment.showBackToHomeOptionMenu
 import com.example.githubsearch.util.UtilView.setInfoViewAsErrorView
 import com.example.githubsearch.util.UtilView.showView
 import com.google.android.material.snackbar.Snackbar
@@ -27,36 +27,21 @@ import kotlinx.android.synthetic.main.layout_detail.*
 class DetailFragment : Fragment() {
 
     private lateinit var viewModel: DetailViewModel
-
-    // user to add to favorite
+    private lateinit var username: String
     private var detail: UserDetail? = null
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-
-        val activity = activity as? MainActivity
-
-        // change action bar title
         activity?.title = getString(R.string.page_detail)
-
-        // show back to home
-        activity?.supportActionBar?.setDisplayHomeAsUpEnabled(true)
-        setHasOptionsMenu(true)
-
+        showBackToHomeOptionMenu(this)
         return inflater.inflate(R.layout.fragment_detail, container, false)
     }
 
-    override fun onDestroyView() {
-
-        val activity = activity as? MainActivity
-
-        // remove back to home
-        activity?.supportActionBar?.setDisplayHomeAsUpEnabled(false)
-        setHasOptionsMenu(false)
-
-        super.onDestroyView()
+    override fun onDestroy() {
+        showBackToHomeOptionMenu(this, false)
+        super.onDestroy()
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
@@ -73,125 +58,141 @@ class DetailFragment : Fragment() {
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
 
-        // navigation arguments
-        val username = DetailFragmentArgs.fromBundle(arguments as Bundle).username
+        // Navigation Args
+        username = DetailFragmentArgs.fromBundle(arguments as Bundle).username
 
-        // views that can show before or after data
-        val viewsInfo = arrayListOf<View>(
-            info_view
-        )
-        // views to show when request data
-        val viewsBeforeData = arrayListOf<View>(
-            progress_bar
-        )
-        // views to show after data received and data exist
-        val viewsExistData = arrayListOf<View>(
-            scroll_view
-        )
-        // views to hide when request data
-        val viewsAfterData = arrayListOf<View>().apply {
-            addAll(viewsExistData)
-            addAll(viewsInfo)
-        }
+        initTabsView()
+        initViewModel()
+        initFab()
 
-        // set follow tabs
-        val tabFollowPagerAdapter =
+        // OnRequest
+        showView(progress_bar)
+        showView(arrayListOf(fab_add, scroll_view, info_view), false)
+    }
+
+    /*
+    * Init TabView with TabPager
+    * */
+    private fun initTabsView() {
+        // Set TabPager Adapter
+        tab_follow_pager.adapter =
             FollowPagerAdapter(context as Context, childFragmentManager).apply {
                 setUsername(username)
             }
-        tab_follow_pager.adapter = tabFollowPagerAdapter
+        // Add TabPager to TabView
         tab_follow.setupWithViewPager(tab_follow_pager)
+    }
 
+    /*
+    * Init User Information to UI
+    * Modify Information -> username */
+    private fun initUserInformation(user: UserDetail?) {
+        user?.let {
 
-        // set view visibility when request data
-        showView(viewsBeforeData)
-        showView(fab_add, false)
-        showView(viewsAfterData, false)
+            // Modify Some Information
+            val login = "@${it.login}"
+            val notApplicable = getString(R.string.not_applicable)
 
+            // Set UI Information
+            Glide.with(this@DetailFragment)
+                .load(it.avatar_url)
+                .placeholder(R.drawable.ic_undraw_profile_pic)
+                .error(R.drawable.ic_undraw_profile_pic)
+                .into(img_avatar)
+            tv_name.text = it.name
+            tv_username.text = login
+            tv_repositories.text = numberFormat(it.public_repos)
+            tv_followers.text = numberFormat(it.followers)
+            tv_following.text = numberFormat(it.following)
+            tv_location.text = it.location ?: notApplicable
+            tv_company.text = it.company ?: notApplicable
+        }
+    }
 
-        // detail view model
+    /*
+    * Init FAB
+    * OnClick -> ViewModel Add Favorite
+    * */
+    private fun initFab() {
+        fab_add.setOnClickListener {
+            detail?.let {
+                viewModel.addLocalFavorite(it)
+            }
+        }
+    }
+
+    /*
+    * Init ViewModel
+    * Observe -> getRemoteDetail, error, userFavorite, isInserted
+    * */
+    private fun initViewModel() {
+
+        // Init
         viewModel = ViewModelProvider(requireActivity()).get(DetailViewModel::class.java)
 
-        // get view model data
+        // Observe
         viewModel.apply {
 
-            // user's detail
+            // Remote User Detail (API)
+            // If user is favorite Fab Hide
             getRemoteDetail(username).observe(viewLifecycleOwner, Observer { user ->
                 user?.let {
 
-                    // add user local data, for add to favorite
                     detail = user
 
-                    // modify some data just for view
-                    val login = "@${it.login}"
-                    val notApplicable = getString(R.string.not_applicable)
+                    // Set User To UI
+                    initUserInformation(detail)
 
-                    // set data to views
-                    Glide.with(this@DetailFragment)
-                        .load(it.avatar_url)
-                        .placeholder(R.drawable.ic_undraw_profile_pic)
-                        .error(R.drawable.ic_undraw_profile_pic)
-                        .into(img_avatar)
-                    tv_name.text = it.name
-                    tv_username.text = login
-                    tv_repositories.text = numberFormat(it.public_repos)
-                    tv_followers.text = numberFormat(it.followers)
-                    tv_following.text = numberFormat(it.following)
-                    tv_location.text = it.location ?: notApplicable
-                    tv_company.text = it.company ?: notApplicable
+                    // Show User Detail UI
+                    showView(scroll_view)
+                    showView(arrayListOf(progress_bar, info_view), false)
 
-                    // set views visibility after data received
-                    showView(viewsBeforeData, false)
-                    showView(viewsExistData)
-
+                    // Check User is Favorite
                     if (progress_bar.isGone || progress_bar.isInvisible) {
-                        // check user is favorite user or not
                         viewModel.checkLocalFavorite(username)
                     }
                 }
             })
 
-            // error
+            // Observe Error
             error.observe(viewLifecycleOwner, Observer {
+
+                // OnError Show ErrorInfoView
                 it?.let {
                     setInfoViewAsErrorView(info_view, it)
-                    showView(viewsInfo)
-                    showView(viewsBeforeData, false)
+                    showView(info_view)
+                    showView(progress_bar, false)
                 }
             })
 
-            // check user is favorite
-            foundUserFavorite.observe(viewLifecycleOwner, Observer {
-                if (it != null || progress_bar.isVisible) {
+            // Observe isFavorite
+            // Hide FAB when user is Favorite
+            userFavorite.observe(viewLifecycleOwner, Observer { isFavorite ->
+                if (isFavorite != null || progress_bar.isVisible) {
                     showView(fab_add, false)
                 } else {
                     showView(fab_add)
                 }
             })
 
-            // check add favorite success
-            isInsertSuccess.observe(viewLifecycleOwner, Observer {
+            // Observe isInserted
+            // OnSuccess -> ViewModel checkLocalFavorite
+            isInserted.observe(viewLifecycleOwner, Observer {
                 it?.let {
                     val message: String
 
                     if (it) {
                         message = getString(R.string.message_add_favorite_success)
-                        showView(fab_add, false)
-                    } else message = getString(R.string.message_add_favorite_failed)
+                        viewModel.checkLocalFavorite(detail?.login as String)
+                    } else
+                        message = getString(R.string.message_add_favorite_failed)
 
-                    Snackbar.make(view as View, message, Snackbar.LENGTH_LONG)
-                        .show()
+                    Snackbar.make(view as View, message, Snackbar.LENGTH_LONG).show()
 
                     // reset status
-                    viewModel.isInsertSuccess.postValue(null)
+                    viewModel.isInserted.postValue(null)
                 }
             })
-        }
-
-        fab_add.setOnClickListener {
-            detail?.let {
-                viewModel.addLocalFavorite(it)
-            }
         }
     }
 }

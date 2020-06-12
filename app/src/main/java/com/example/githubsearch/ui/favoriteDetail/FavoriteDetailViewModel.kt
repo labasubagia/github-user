@@ -12,27 +12,24 @@ import kotlinx.coroutines.launch
 
 class FavoriteDetailViewModel(application: Application) : AndroidViewModel(application) {
 
-    // local repo
-    private val localFavoriteUserRepo: LocalFavoriteUserRepository
-    val isDeleteSuccess = MutableLiveData<Boolean>()
+    private val localFavoriteUserRepository: LocalFavoriteUserRepository
+
+    val isDeleted = MutableLiveData<Boolean>()
     var userDetail = MutableLiveData<UserDetail>()
+
+    fun deleteFavorite(user: UserDetail) =
+        viewModelScope.launch(Dispatchers.IO) {
+            val deleted = localFavoriteUserRepository.delete(user)
+            isDeleted.postValue(deleted > 0)
+        }
+
+    fun getDetail(username: String) =
+        viewModelScope.launch(Dispatchers.IO) {
+            userDetail.postValue(localFavoriteUserRepository.getByUsername(username))
+        }
 
     init {
         val favoriteUserDao = LocalDatabase.getDatabase(application).favoriteUserDao()
-        localFavoriteUserRepo = LocalFavoriteUserRepository(favoriteUserDao)
-    }
-
-    fun deleteFavorite(user: UserDetail) = viewModelScope.launch(Dispatchers.IO) {
-        try {
-            localFavoriteUserRepo.delete(user)
-            isDeleteSuccess.postValue(true)
-        } catch (e: Throwable) {
-            isDeleteSuccess.postValue(false)
-        }
-    }
-
-    // local
-    fun searchDetail(username: String) = viewModelScope.launch(Dispatchers.IO) {
-        userDetail.postValue(localFavoriteUserRepo.searchByUsername(username))
+        localFavoriteUserRepository = LocalFavoriteUserRepository(favoriteUserDao)
     }
 }

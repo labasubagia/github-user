@@ -4,7 +4,7 @@ import android.view.View
 import com.bumptech.glide.Glide
 import com.example.githubsearch.R
 import com.example.githubsearch.model.CustomError
-import com.example.githubsearch.util.Util.REQUEST_SERVER_ERROR
+import com.example.githubsearch.util.UtilError.REQUEST_SERVER_ERROR
 import kotlinx.android.synthetic.main.layout_info.view.*
 import java.util.*
 

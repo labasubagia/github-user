@@ -18,20 +18,21 @@ import kotlinx.android.synthetic.main.fragment_follow.*
 
 class FollowFragment : Fragment() {
 
+    private lateinit var listAdapter: UserListAdapter
+    private var typeFragment: String? = null
+    private var username: String? = null
+
     companion object {
         const val TYPE_FOLLOWERS = "type_follower"
         const val TYPE_FOLLOWING = "type_following"
 
         fun newInstance(type: String, username: String): FollowFragment {
             return FollowFragment().apply {
-                this.type = type
+                this.typeFragment = type
                 this.username = username
             }
         }
     }
-
-    private var type: String? = null
-    private var username: String? = null
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -43,80 +44,100 @@ class FollowFragment : Fragment() {
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
+        initRecyclerView()
+        initViewModel()
 
-        // views that can show before or after data
-        val viewsInfo = arrayListOf<View>(
-            info_view
-        )
-        // views to show when request data
-        val viewsBeforeData = arrayListOf<View>(
-            progress_bar
-        )
-        // views to show when data received and not empty
-        val viewsExistData = arrayListOf<View>(
-            rv_users
-        )
-        // views to hide when request data
-        val viewsAfterData = arrayListOf<View>().apply {
-            addAll(viewsExistData)
-            addAll(viewsInfo)
-        }
+        // OnRequest
+        showView(progress_bar)
+        showView(arrayListOf(rv_users, info_view), false)
+    }
 
 
-        // set users adapter
-        val adapter = UserListAdapter().apply {
+    /*
+    * Init RecyclerView -> Followers/Following
+    * */
+    private fun initRecyclerView() {
+        // Adapter
+        listAdapter = UserListAdapter().apply {
             notifyDataSetChanged()
         }
-        rv_users.layoutManager = LinearLayoutManager(context)
-        rv_users.adapter = adapter
 
-
-        // use view model
-        val viewModel = ViewModelProvider(
-            this,
-            ViewModelProvider.NewInstanceFactory()
-        ).get(FollowViewModel::class.java)
-
-
-        // set info view resources
-        var imgInfoResource = 0
-        var textInfoResource = 0
-        when (type) {
-            TYPE_FOLLOWERS -> {
-                imgInfoResource = R.drawable.ic_undraw_followers
-                textInfoResource = R.string.follower_zero
-            }
-            TYPE_FOLLOWING -> {
-                imgInfoResource = R.drawable.ic_undraw_follow_me_drone
-                textInfoResource = R.string.following_zero
-            }
+        // Settings
+        rv_users.apply {
+            setHasFixedSize(true)
+            adapter = listAdapter
+            layoutManager = LinearLayoutManager(context)
         }
+    }
 
+    /*
+    * Init ViewModel
+    * Observe -> follow, error
+    * */
+    private fun initViewModel() {
 
-        // run function
-        showView(viewsBeforeData)
-        showView(viewsAfterData, false)
+        // Init
+        val viewModel = ViewModelProvider(this).get(FollowViewModel::class.java)
 
+        // Observe
         viewModel.apply {
-            follow(username as String, type as String).observe(viewLifecycleOwner, Observer {
-                it?.let {
-                    if (it.size == 0) {
-                        setInfoView(info_view, imgInfoResource, textInfoResource)
-                        showView(viewsInfo)
-                    } else {
-                        adapter.setUsers(it)
-                        showView(viewsExistData)
+
+            // Observe Follow Based On Type of Fragment
+            follow(username as String, typeFragment as String).observe(
+                viewLifecycleOwner,
+                Observer {
+
+                    it?.let {
+
+                        // When Empty
+                        // Show InfoView
+                        if (it.size == 0) {
+                            showEmptyInfoView(typeFragment)
+                        }
+                        // When Not Empty
+                        // Show RecyclerView
+                        else {
+                            listAdapter.setUsers(it)
+                            showView(rv_users)
+                        }
+
+                        showView(progress_bar, false)
                     }
-                    showView(viewsBeforeData, false)
-                }
-            })
-            error(type as String).observe(viewLifecycleOwner, Observer {
+                })
+
+            // Observe Error
+            error(typeFragment as String).observe(viewLifecycleOwner, Observer {
+
+                // OnError Show ErrorInfoView
                 it?.let {
                     setInfoViewAsErrorView(info_view, it)
-                    showView(viewsInfo)
-                    showView(viewsBeforeData, false)
+                    showView(info_view)
+                    showView(progress_bar, false)
                 }
             })
+        }
+    }
+
+
+    /*
+    * Show Empty Info based on Type of Fragment
+    * */
+    private fun showEmptyInfoView(type: String?) {
+        type?.let {
+            var imgInfoResource = 0
+            var textInfoResource = 0
+            when (type) {
+                TYPE_FOLLOWERS -> {
+                    imgInfoResource = R.drawable.ic_undraw_followers
+                    textInfoResource = R.string.follower_zero
+                }
+                TYPE_FOLLOWING -> {
+                    imgInfoResource = R.drawable.ic_undraw_follow_me_drone
+                    textInfoResource = R.string.following_zero
+                }
+            }
+            setInfoView(info_view, imgInfoResource, textInfoResource)
+            showView(info_view)
         }
     }
 }

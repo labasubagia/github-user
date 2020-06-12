@@ -11,10 +11,10 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import com.bumptech.glide.Glide
 import com.example.githubsearch.R
-import com.example.githubsearch.activity.main.MainActivity
 import com.example.githubsearch.adapter.FollowPagerAdapter
 import com.example.githubsearch.model.UserDetail
 import com.example.githubsearch.util.Util
+import com.example.githubsearch.util.UtilFragment.showBackToHomeOptionMenu
 import com.example.githubsearch.util.UtilView.showView
 import com.google.android.material.snackbar.Snackbar
 import kotlinx.android.synthetic.main.layout_detail.*
@@ -22,18 +22,16 @@ import kotlinx.android.synthetic.main.layout_detail.*
 class FavoriteDetailFragment : Fragment() {
 
     private lateinit var viewModel: FavoriteDetailViewModel
-    private var userToDelete: UserDetail? = null
+    private lateinit var username: String
+    private var detail: UserDetail? = null
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
+        activity?.title = getString(R.string.page_favorite_detail)
+        showBackToHomeOptionMenu(this)
         return inflater.inflate(R.layout.fragment_favorite_detail, container, false)
-    }
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        setOptionMenu()
     }
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
@@ -59,95 +57,117 @@ class FavoriteDetailFragment : Fragment() {
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
 
+        // navigation arguments
+        username = FavoriteDetailFragmentArgs.fromBundle(arguments as Bundle).username
+
+        initTabsView()
+        initViewModel()
+
+        // OnRequest
         showView(arrayListOf(fab_add, info_view, scroll_view), false)
         showView(progress_bar)
+    }
 
-        // navigation arguments
-        val username = FavoriteDetailFragmentArgs.fromBundle(arguments as Bundle).username
+    /*
+    * Init User Information to UI
+    * Modify Information -> username */
+    private fun initUserInformation(user: UserDetail?) {
+        user?.let {
 
-        // set follow tabs
-        val tabFollowPagerAdapter =
+            // Modify Some Information
+            val login = "@${it.login}"
+            val notApplicable = getString(R.string.not_applicable)
+
+            // Set UI Information
+            Glide.with(this@FavoriteDetailFragment)
+                .load(it.avatar_url)
+                .placeholder(R.drawable.ic_undraw_profile_pic)
+                .error(R.drawable.ic_undraw_profile_pic)
+                .into(img_avatar)
+            tv_name.text = it.name
+            tv_username.text = login
+            tv_repositories.text = Util.numberFormat(it.public_repos)
+            tv_followers.text = Util.numberFormat(it.followers)
+            tv_following.text = Util.numberFormat(it.following)
+            tv_location.text = it.location ?: notApplicable
+            tv_company.text = it.company ?: notApplicable
+        }
+    }
+
+    /*
+    * Init TabView with TabPager*/
+    private fun initTabsView() {
+        // Set TabPager Adapter
+        tab_follow_pager.adapter =
             FollowPagerAdapter(context as Context, childFragmentManager).apply {
                 setUsername(username)
             }
-        tab_follow_pager.adapter = tabFollowPagerAdapter
-        tab_follow.setupWithViewPager(tab_follow_pager)
 
-        // view model
+        // Add TabPager to TabView
+        tab_follow.setupWithViewPager(tab_follow_pager)
+    }
+
+
+    /*
+    * Init ViewModel
+    * Request -> searchDetail (by username)
+    * Observe -> userDetail, isDeleted
+    * */
+    private fun initViewModel() {
+
+        // Init
         viewModel = ViewModelProvider(this).get(FavoriteDetailViewModel::class.java)
 
-        // get user detail
-        viewModel.searchDetail(username)
+        // Request
+        viewModel.getDetail(username)
 
+        // Observe
         viewModel.apply {
 
+            // Observe User
             userDetail.observe(viewLifecycleOwner, Observer { user ->
                 user?.let {
-
-                    userToDelete = user
-
-                    // modify some data just for view
-                    val login = "@${it.login}"
-                    val notApplicable = getString(R.string.not_applicable)
-
-                    // set data to views
-                    Glide.with(this@FavoriteDetailFragment)
-                        .load(it.avatar_url)
-                        .placeholder(R.drawable.ic_undraw_profile_pic)
-                        .error(R.drawable.ic_undraw_profile_pic)
-                        .into(img_avatar)
-                    tv_name.text = it.name
-                    tv_username.text = login
-                    tv_repositories.text = Util.numberFormat(it.public_repos)
-                    tv_followers.text = Util.numberFormat(it.followers)
-                    tv_following.text = Util.numberFormat(it.following)
-                    tv_location.text = it.location ?: notApplicable
-                    tv_company.text = it.company ?: notApplicable
-
+                    detail = user
+                    initUserInformation(detail)
                     showView(scroll_view)
                     showView(progress_bar, false)
                 }
             })
 
-            isDeleteSuccess.observe(viewLifecycleOwner, Observer {
+            // Observe Delete Success
+            isDeleted.observe(viewLifecycleOwner, Observer {
                 it?.let { status ->
 
-                    // set message
-                    var message = getString(R.string.message_delete_favorite_failed)
-                    if (status) {
-                        message = getString(R.string.message_delete_favorite_success)
-                    }
-
-                    // message
+                    // Show SnackBar with Message based on Status
+                    val message =
+                        if (status)
+                            getString(R.string.message_delete_favorite_success)
+                        else
+                            getString(R.string.message_delete_favorite_failed)
                     Snackbar.make(view as View, message, Snackbar.LENGTH_LONG).show()
 
-                    // remove status
-                    viewModel.isDeleteSuccess.postValue(null)
+                    // ViewModel nullify isDeleteSuccess
+                    viewModel.isDeleted.postValue(null)
 
-                    // back
+                    // When Success, Back to Previous Fragment
                     if (status) {
                         findNavController().navigateUp()
                     }
                 }
             })
         }
-
     }
 
-
-    private fun setOptionMenu() {
-        val activity = activity as? MainActivity
-        activity?.title = getString(R.string.page_favorite_detail)
-        activity?.supportActionBar?.setDisplayHomeAsUpEnabled(true)
-        setHasOptionsMenu(true)
-    }
-
+    /*
+    * Delete Dialog
+    * OnDelete -> ViewMode deleteFavorite
+    * */
     private fun showDeleteDialog() {
         AlertDialog.Builder(context).apply {
             setTitle(getString(R.string.dialog_delete_title))
             setMessage(getString(R.string.dialog_delete_message))
             setPositiveButton(getString(R.string.dialog_yes)) { _: DialogInterface?, _: Int ->
-                userToDelete?.let {
+                detail?.let {
                     viewModel.deleteFavorite(it)
                 }
             }
