@@ -44,4 +44,6 @@
     <string name="message_language_change">Bahasa dirubah ke %s!</string>
     <string name="message_reminder_change_active">Pengingat aktif!</string>
     <string name="message_reminder_change_deactivate">Pengingat nonaktif!</string>
+    <string name="notification_title">Pengingat</string>
+    <string name="notification_message">Ayo cari pengguna populer di Github!</string>
 </resources>

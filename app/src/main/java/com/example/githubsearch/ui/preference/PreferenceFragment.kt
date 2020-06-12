@@ -9,6 +9,7 @@ import androidx.preference.CheckBoxPreference
 import androidx.preference.ListPreference
 import androidx.preference.PreferenceFragmentCompat
 import com.example.githubsearch.R
+import com.example.githubsearch.broadcast.ReminderReceiver
 import com.example.githubsearch.util.UtilFragment.showBackToHomeOptionMenu
 import com.example.githubsearch.util.UtilLanguage.getDefaultLanguage
 import com.example.githubsearch.util.UtilLanguage.setLanguage
@@ -17,6 +18,13 @@ import com.google.android.material.snackbar.Snackbar
 
 class PreferenceFragment : PreferenceFragmentCompat(),
     SharedPreferences.OnSharedPreferenceChangeListener {
+
+    // Reminder
+    private val reminderReceiver = ReminderReceiver()
+
+    companion object {
+        val DEFAULT_REMINDER = false
+    }
 
     private lateinit var languageKey: String
     private lateinit var reminderKey: String
@@ -75,7 +83,9 @@ class PreferenceFragment : PreferenceFragmentCompat(),
         languagePreference.value = language
         setLanguage(requireContext(), language as String)
 
-        reminderPreference.isChecked = sharedPreferences.getBoolean(reminderKey, true)
+        val isReminderActive = sharedPreferences.getBoolean(reminderKey, DEFAULT_REMINDER)
+        reminderPreference.isChecked = isReminderActive
+        reminderReceiver.setReminder(requireContext(), isReminderActive)
     }
 
     override fun onSharedPreferenceChanged(sharedPreferences: SharedPreferences, key: String?) {
@@ -95,17 +105,12 @@ class PreferenceFragment : PreferenceFragmentCompat(),
         }
 
         if (key == reminderKey) {
-            val isReminderActive = sharedPreferences.getBoolean(reminderKey, true)
+            val isReminderActive = sharedPreferences.getBoolean(reminderKey, DEFAULT_REMINDER)
+
             reminderPreference.isChecked = isReminderActive
 
-            // snack bar
-            val message =
-                getString(
-                    if (isReminderActive)
-                        R.string.message_reminder_change_active
-                    else
-                        R.string.message_reminder_change_deactivate
-                )
+            val message = reminderReceiver.setReminder(requireContext(), isReminderActive)
+
             showSnackBar(message)
         }
     }

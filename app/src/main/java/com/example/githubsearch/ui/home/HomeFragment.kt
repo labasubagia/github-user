@@ -9,13 +9,11 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
-import androidx.preference.PreferenceManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.githubsearch.R
 import com.example.githubsearch.adapter.UserListAdapter
 import com.example.githubsearch.model.User
-import com.example.githubsearch.util.UtilLanguage.getDefaultLanguage
-import com.example.githubsearch.util.UtilLanguage.setLanguage
+import com.example.githubsearch.util.UtilSharedPreference.loadPreferenceSettings
 import com.example.githubsearch.util.UtilView.setInfoView
 import com.example.githubsearch.util.UtilView.setInfoViewAsErrorView
 import com.example.githubsearch.util.UtilView.showView
@@ -37,7 +35,7 @@ class HomeFragment : Fragment() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setHasOptionsMenu(true)
-        settingLanguage()
+        loadPreferenceSettings(requireContext())
     }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
@@ -215,15 +213,4 @@ class HomeFragment : Fragment() {
         }
     }
 
-
-    private fun settingLanguage() {
-        // read from shared preference
-        // if not set, use system language
-        val preference = PreferenceManager.getDefaultSharedPreferences(context)
-        val language = preference.getString(
-            getString(R.string.preference_language_key),
-            getDefaultLanguage(requireContext())
-        )
-        setLanguage(requireContext(), language as String)
-    }
 }

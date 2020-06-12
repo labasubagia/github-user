@@ -3,6 +3,8 @@
     package="com.example.githubsearch">
 
     <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.WAKE_LOCK" />
+    <uses-permission android:name="android.permission.VIBRATE" />
 
     <permission
         android:name="com.example.githubsearch.READ_DATABASE"
@@ -36,7 +38,11 @@
             android:enabled="true"
             android:exported="true"
             android:readPermission="com.example.githubsearch.READ_DATABASE"
-            android:writePermission="com.example.githubsearch.WRITE_DATABASE"></provider>
+            android:writePermission="com.example.githubsearch.WRITE_DATABASE" />
+        <receiver
+            android:name="com.example.githubsearch.broadcast.ReminderReceiver"
+            android:enabled="true"
+            android:exported="true" />
     </application>
 
 </manifest>

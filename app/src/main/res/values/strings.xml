@@ -49,4 +49,6 @@
     <string name="message_language_change">Language changed to %s!</string>
     <string name="message_reminder_change_active">Reminder is active!</string>
     <string name="message_reminder_change_deactivate">Reminder is deactivate!</string>
+    <string name="notification_title">Reminder</string>
+    <string name="notification_message">Let\'s find popular user on Github!</string>
 </resources>
