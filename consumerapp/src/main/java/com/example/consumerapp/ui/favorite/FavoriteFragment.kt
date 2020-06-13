@@ -73,7 +73,7 @@ class FavoriteFragment : Fragment() {
 
 
         // Request Favorite User
-        viewModel.setUser()
+        viewModel.setUsers()
 
 
         // Observe
