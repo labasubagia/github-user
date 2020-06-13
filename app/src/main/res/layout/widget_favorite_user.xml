@@ -1,0 +1,61 @@
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="@dimen/widget_margin">
+
+    <LinearLayout
+        android:id="@+id/data_view"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:weightSum="10">
+
+        <StackView
+            android:id="@+id/stack_view"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="9"
+            android:loopViews="true" />
+
+        <TextView
+            android:id="@+id/tv_banner"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="start"
+            android:layout_weight="1"
+            android:padding="2dp"
+            android:text="@string/label_favorite_github_user"
+            android:textColor="@color/colorBackground" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/empty_view"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_gravity="center"
+        android:background="@color/colorBackground"
+        android:orientation="vertical"
+        android:paddingTop="16dp"
+        android:paddingBottom="16dp"
+        android:weightSum="10">
+
+        <ImageView
+            android:id="@+id/imageView"
+            android:layout_width="100dp"
+            android:layout_height="0dp"
+            android:layout_gravity="center"
+            android:layout_weight="9"
+            android:contentDescription="@string/user_not_found"
+            android:src="@drawable/ic_undraw_no_data" />
+
+        <TextView
+            android:id="@+id/tv_empty_data"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text="@string/user_not_found" />
+    </LinearLayout>
+
+</FrameLayout>

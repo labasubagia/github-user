@@ -2,16 +2,20 @@ package com.example.githubsearch.provider
 
 import android.content.ContentProvider
 import android.content.ContentValues
+import android.content.Context
 import android.content.UriMatcher
 import android.database.Cursor
 import android.net.Uri
 import com.example.githubsearch.database.LocalDatabase
 import com.example.githubsearch.model.UserDetail
 import com.example.githubsearch.repository.LocalFavoriteUserRepository
+import com.example.githubsearch.widget.FavoriteUserWidget
+
 
 class FavoriteUserProvider : ContentProvider() {
 
     companion object {
+
         private const val AUTHORITY = "com.example.githubsearch"
         private const val SCHEME = "content"
         private const val TABLE_NAME = UserDetail.TABLE_NAME
@@ -25,7 +29,9 @@ class FavoriteUserProvider : ContentProvider() {
             .build()
 
         val uriMatcher = UriMatcher(UriMatcher.NO_MATCH)
-        private lateinit var favoriteUserRepo: LocalFavoriteUserRepository
+
+        // Local Repository
+        private lateinit var repository: LocalFavoriteUserRepository
 
         init {
             uriMatcher.addURI(AUTHORITY, TABLE_NAME, USER)
@@ -34,10 +40,14 @@ class FavoriteUserProvider : ContentProvider() {
     }
 
     override fun onCreate(): Boolean {
-        val favoriteUserDao = context?.let { LocalDatabase.getDatabase(it).favoriteUserDao() }
-        favoriteUserDao?.let {
-            favoriteUserRepo = LocalFavoriteUserRepository(favoriteUserDao)
+
+        // Init Repository
+        context?.let {
+            LocalDatabase.getDatabase(it).favoriteUserDao()
+        }?.let {
+            repository = LocalFavoriteUserRepository(it)
         }
+
         return true
     }
 
@@ -45,11 +55,29 @@ class FavoriteUserProvider : ContentProvider() {
         uri: Uri, projection: Array<String>?, selection: String?,
         selectionArgs: Array<String>?, sortOrder: String?
     ): Cursor? {
-        return when (uriMatcher.match(uri)) {
-            USER -> favoriteUserRepo.getAllCursor()
-            USER_NAME -> favoriteUserRepo.searchByUsernameCursor(uri.lastPathSegment.toString())
-            else -> null
+
+        var cursor: Cursor? = null
+
+        // Create Thread
+        // Because this error when call from widget
+        val thread = Thread(Runnable {
+            cursor = when (uriMatcher.match(uri)) {
+                USER -> repository.getAllCursor()
+                USER_NAME -> repository.searchByUsernameCursor(uri.lastPathSegment.toString())
+                else -> null
+            }
+        })
+
+        // Run thread
+        try {
+            thread.start()
+            thread.join()
+        } catch (e: InterruptedException) {
+            e.printStackTrace()
         }
+
+        cursor?.setNotificationUri(context?.contentResolver, uri)
+        return cursor
     }
 
     override fun getType(uri: Uri): String? {
@@ -68,11 +96,17 @@ class FavoriteUserProvider : ContentProvider() {
     }
 
     override fun delete(uri: Uri, selection: String?, selectionArgs: Array<String>?): Int {
+
+        // Delete
         val deleted = when (uriMatcher.match(uri)) {
-            USER_NAME -> favoriteUserRepo.deleteByUsername(uri.lastPathSegment.toString())
+            USER_NAME -> repository.deleteByUsername(uri.lastPathSegment.toString())
             else -> 0
         }
         context?.contentResolver?.notifyChange(CONTENT_URI, null)
+
+        // Refresh Widget
+        FavoriteUserWidget.sendRefreshBroadcast(context as Context)
+
         return deleted
     }
 }

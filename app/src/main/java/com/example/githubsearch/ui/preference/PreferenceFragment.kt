@@ -23,7 +23,7 @@ class PreferenceFragment : PreferenceFragmentCompat(),
     private val reminderReceiver = ReminderReceiver()
 
     companion object {
-        val DEFAULT_REMINDER = false
+        const val DEFAULT_REMINDER = false
     }
 
     private lateinit var languageKey: String

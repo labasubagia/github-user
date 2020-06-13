@@ -22,6 +22,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
+
         <activity
             android:name=".activity.main.MainActivity"
             android:configChanges="orientation|screenSize|smallestScreenSize|screenLayout|locale">
@@ -32,6 +33,7 @@
             </intent-filter>
             <nav-graph android:value="@navigation/main_navigation" />
         </activity>
+
         <provider
             android:name="com.example.githubsearch.provider.FavoriteUserProvider"
             android:authorities="com.example.githubsearch"
@@ -39,10 +41,26 @@
             android:exported="true"
             android:readPermission="com.example.githubsearch.READ_DATABASE"
             android:writePermission="com.example.githubsearch.WRITE_DATABASE" />
+
         <receiver
             android:name="com.example.githubsearch.broadcast.ReminderReceiver"
             android:enabled="true"
             android:exported="true" />
+
+        <receiver android:name="com.example.githubsearch.widget.FavoriteUserWidget">
+            <intent-filter>
+                <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
+            </intent-filter>
+
+            <meta-data
+                android:name="android.appwidget.provider"
+                android:resource="@xml/favorite_user_widget_info" />
+        </receiver>
+
+        <service
+            android:name="com.example.githubsearch.widget.StackWidgetService"
+            android:permission="android.permission.BIND_REMOTEVIEWS" />
+
     </application>
 
 </manifest>

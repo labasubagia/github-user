@@ -16,6 +16,7 @@ import com.example.githubsearch.model.UserDetail
 import com.example.githubsearch.util.Util
 import com.example.githubsearch.util.UtilFragment.showBackToHomeOptionMenu
 import com.example.githubsearch.util.UtilView.showView
+import com.example.githubsearch.widget.FavoriteUserWidget
 import com.google.android.material.snackbar.Snackbar
 import kotlinx.android.synthetic.main.layout_detail.*
 
@@ -149,8 +150,10 @@ class FavoriteDetailFragment : Fragment() {
                     // ViewModel nullify isDeleteSuccess
                     viewModel.isDeleted.postValue(null)
 
-                    // When Success, Back to Previous Fragment
+                    // When Success
+                    // UpdateWidget & Back to Previous Fragment
                     if (status) {
+                        FavoriteUserWidget.sendRefreshBroadcast(requireContext())
                         findNavController().navigateUp()
                     }
                 }

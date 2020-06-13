@@ -6,6 +6,8 @@ import androidx.preference.PreferenceManager
 import com.example.githubsearch.R
 import com.example.githubsearch.broadcast.ReminderReceiver
 import com.example.githubsearch.ui.preference.PreferenceFragment
+import com.example.githubsearch.util.UtilLanguage.getDefaultLanguage
+import com.example.githubsearch.util.UtilLanguage.setLanguage
 
 object UtilSharedPreference {
 
@@ -18,9 +20,9 @@ object UtilSharedPreference {
         // if not set, use system language
         val language = sharedPreferences.getString(
             context.getString(R.string.preference_language_key),
-            UtilLanguage.getDefaultLanguage(context)
+            getDefaultLanguage(context)
         )
-        UtilLanguage.setLanguage(context, language as String)
+        setLanguage(context, language as String)
     }
 
     /*

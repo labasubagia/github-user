@@ -51,4 +51,8 @@
     <string name="message_reminder_change_deactivate">Reminder is deactivate!</string>
     <string name="notification_title">Reminder</string>
     <string name="notification_message">Let\'s find popular user on Github!</string>
+    <string name="widget_favorite_user_text">Favorite Users</string>
+    <string name="label_username">Username</string>
+    <string name="label_name">Name</string>
+    <string name="label_favorite_github_user">Favorite Github User</string>
 </resources>

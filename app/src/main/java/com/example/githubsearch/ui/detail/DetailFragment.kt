@@ -21,6 +21,7 @@ import com.example.githubsearch.util.Util.numberFormat
 import com.example.githubsearch.util.UtilFragment.showBackToHomeOptionMenu
 import com.example.githubsearch.util.UtilView.setInfoViewAsErrorView
 import com.example.githubsearch.util.UtilView.showView
+import com.example.githubsearch.widget.FavoriteUserWidget
 import com.google.android.material.snackbar.Snackbar
 import kotlinx.android.synthetic.main.layout_detail.*
 
@@ -176,7 +177,7 @@ class DetailFragment : Fragment() {
             })
 
             // Observe isInserted
-            // OnSuccess -> ViewModel checkLocalFavorite
+            // OnSuccess -> ViewModel checkLocalFavorite, Update Widget
             isInserted.observe(viewLifecycleOwner, Observer {
                 it?.let {
                     val message: String
@@ -184,6 +185,9 @@ class DetailFragment : Fragment() {
                     if (it) {
                         message = getString(R.string.message_add_favorite_success)
                         viewModel.checkLocalFavorite(detail?.login as String)
+
+                        // Update Widget
+                        FavoriteUserWidget.sendRefreshBroadcast(requireContext())
                     } else
                         message = getString(R.string.message_add_favorite_failed)
 
