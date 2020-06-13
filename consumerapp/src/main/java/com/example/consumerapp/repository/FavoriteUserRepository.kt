@@ -45,12 +45,7 @@ class FavoriteUserRepository(private val context: Context) {
         return list
     }
 
-    fun delete(username: String): Int {
-        val uriWithUsername = Uri.parse("$CONTENT_URI/$username")
-        return context.contentResolver.delete(uriWithUsername, null, null)
-    }
-
-    fun searchByUsername(username: String): UserDetail? {
+    fun getByUsername(username: String): UserDetail? {
         val uriWithUsername = Uri.parse("$CONTENT_URI/$username")
         val cursor = context.contentResolver.query(
             uriWithUsername,
@@ -65,4 +60,8 @@ class FavoriteUserRepository(private val context: Context) {
         return null
     }
 
+    fun delete(username: String): Int {
+        val uriWithUsername = Uri.parse("$CONTENT_URI/$username")
+        return context.contentResolver.delete(uriWithUsername, null, null)
+    }
 }

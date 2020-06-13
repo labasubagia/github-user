@@ -24,7 +24,7 @@ class FavoriteDetailViewModel(context: Context) : ViewModel() {
 
     fun search(username: String) =
         viewModelScope.launch(Dispatchers.IO) {
-            val user = repository.searchByUsername(username)
+            val user = repository.getByUsername(username)
             userDetail.postValue(user)
         }
 }
