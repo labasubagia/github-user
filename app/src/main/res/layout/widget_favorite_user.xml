@@ -19,9 +19,8 @@
 
         <TextView
             android:id="@+id/tv_banner"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_gravity="start"
             android:layout_weight="1"
             android:padding="2dp"
             android:text="@string/label_favorite_github_user"
@@ -40,12 +39,20 @@
         android:paddingBottom="16dp"
         android:weightSum="10">
 
+        <TextView
+            android:id="@+id/tv_banner_empty"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text="@string/label_favorite_github_user" />
+
         <ImageView
             android:id="@+id/imageView"
-            android:layout_width="100dp"
+            android:layout_width="80dp"
             android:layout_height="0dp"
             android:layout_gravity="center"
-            android:layout_weight="9"
+            android:layout_weight="8"
             android:contentDescription="@string/user_not_found"
             android:src="@drawable/ic_undraw_no_data" />
 
