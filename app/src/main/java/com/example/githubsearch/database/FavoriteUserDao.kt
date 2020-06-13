@@ -2,7 +2,10 @@ package com.example.githubsearch.database
 
 import android.database.Cursor
 import androidx.lifecycle.LiveData
-import androidx.room.*
+import androidx.room.Dao
+import androidx.room.Insert
+import androidx.room.OnConflictStrategy
+import androidx.room.Query
 import com.example.githubsearch.model.UserDetail
 import com.example.githubsearch.model.UserDetail.Companion.LOGIN
 import com.example.githubsearch.model.UserDetail.Companion.TABLE_NAME
@@ -23,9 +26,6 @@ interface FavoriteUserDao {
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insert(user: UserDetail): Long
-
-    @Delete
-    fun delete(user: UserDetail): Int
 
     @Query("DELETE FROM $TABLE_NAME WHERE $LOGIN = :username")
     fun deleteByUsername(username: String): Int

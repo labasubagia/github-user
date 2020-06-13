@@ -63,7 +63,7 @@ class FavoriteUserProvider : ContentProvider() {
         val thread = Thread(Runnable {
             cursor = when (uriMatcher.match(uri)) {
                 USER -> repository.getAllCursor()
-                USER_NAME -> repository.searchByUsernameCursor(uri.lastPathSegment.toString())
+                USER_NAME -> repository.getByUsernameCursor(uri.lastPathSegment.toString())
                 else -> null
             }
         })

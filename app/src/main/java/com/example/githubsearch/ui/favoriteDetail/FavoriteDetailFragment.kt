@@ -171,7 +171,7 @@ class FavoriteDetailFragment : Fragment() {
             setMessage(getString(R.string.dialog_delete_message))
             setPositiveButton(getString(R.string.dialog_yes)) { _: DialogInterface?, _: Int ->
                 detail?.let {
-                    viewModel.deleteFavorite(it)
+                    viewModel.deleteFavorite(it.login)
                 }
             }
             setNegativeButton(getString(R.string.dialog_no)) { dialog: DialogInterface?, _: Int ->

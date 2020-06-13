@@ -17,9 +17,9 @@ class FavoriteDetailViewModel(application: Application) : AndroidViewModel(appli
     val isDeleted = MutableLiveData<Boolean>()
     var userDetail = MutableLiveData<UserDetail>()
 
-    fun deleteFavorite(user: UserDetail) =
+    fun deleteFavorite(username: String) =
         viewModelScope.launch(Dispatchers.IO) {
-            val deleted = localFavoriteUserRepository.delete(user)
+            val deleted = localFavoriteUserRepository.deleteByUsername(username)
             isDeleted.postValue(deleted > 0)
         }
 

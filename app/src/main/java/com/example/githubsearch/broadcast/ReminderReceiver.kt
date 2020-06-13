@@ -136,8 +136,7 @@ class ReminderReceiver : BroadcastReceiver() {
     }
 
     /*
-    * Func to Set Reminder
-    * Check isActive before Set Reminder
+    * Function to Set Reminder
     * */
     fun setReminder(context: Context, setActive: Boolean = true): String {
         return if (setActive) {

@@ -10,20 +10,19 @@ class LocalFavoriteUserRepository(private val favoriteUserDao: FavoriteUserDao) 
     fun insert(user: UserDetail) =
         favoriteUserDao.insert(user)
 
-    fun delete(user: UserDetail) =
-        favoriteUserDao.delete(user)
-
     fun getByUsername(username: String) =
         favoriteUserDao.getByUsername(username)
 
+    fun deleteByUsername(username: String) =
+        favoriteUserDao.deleteByUsername(username)
 
-    // For Content Provider
+
+    // This Below for mostly content provider
+    // Some Content Provider method need cursor
 
     fun getAllCursor() = favoriteUserDao.getAllCursor()
 
-    fun searchByUsernameCursor(username: String) =
+    fun getByUsernameCursor(username: String) =
         favoriteUserDao.getByUsernameCursor(username)
 
-    fun deleteByUsername(username: String) =
-        favoriteUserDao.deleteByUsername(username)
 }
