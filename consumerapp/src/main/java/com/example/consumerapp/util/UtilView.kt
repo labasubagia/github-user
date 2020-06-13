@@ -4,7 +4,7 @@ import android.view.View
 import com.bumptech.glide.Glide
 import com.example.consumerapp.R
 import com.example.consumerapp.model.CustomError
-import com.example.consumerapp.util.Util.REQUEST_SERVER_ERROR
+import com.example.consumerapp.util.UtilError.REQUEST_SERVER_ERROR
 import kotlinx.android.synthetic.main.layout_info.view.*
 import java.util.*
 

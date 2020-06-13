@@ -8,15 +8,14 @@ import com.example.consumerapp.repository.FavoriteUserRepository
 
 class FavoriteDetailViewModel(context: Context) : ViewModel() {
 
-    // local repo
     private val repository = FavoriteUserRepository(context)
-    val isDeleteSuccess = MutableLiveData<Boolean>()
-    var userDetail = MutableLiveData<UserDetail>()
 
+    val isDeleted = MutableLiveData<Boolean>()
+    var userDetail = MutableLiveData<UserDetail>()
 
     fun delete(user: UserDetail) {
         val status = repository.delete(user.login)
-        isDeleteSuccess.postValue(status > 0)
+        isDeleted.postValue(status > 0)
     }
 
     fun search(username: String) {

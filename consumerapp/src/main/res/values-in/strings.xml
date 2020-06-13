@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">Pengguna Github</string>
+    <string name="app_name">Consumer App</string>
     <string name="user_not_found">Tidak Ada Data Ditemukan</string>
     <string name="label_followers">Pengikut</string>
     <string name="label_following">Mengikuti</string>
@@ -44,4 +44,10 @@
     <string name="message_language_change">Bahasa dirubah ke %s!</string>
     <string name="message_reminder_change_active">Pengingat aktif!</string>
     <string name="message_reminder_change_deactivate">Pengingat nonaktif!</string>
+    <string name="notification_title">Pengingat</string>
+    <string name="notification_message">Ayo cari pengguna populer di Github!</string>
+    <string name="widget_favorite_user_text">Pengguna Favorit</string>
+    <string name="label_name">Nama</string>
+    <string name="label_username">Username</string>
+    <string name="label_favorite_github_user">Pengguna Github Favorit</string>
 </resources>

@@ -10,8 +10,10 @@ import com.example.consumerapp.repository.FavoriteUserRepository
 class FavoriteViewModel(context: Context) : ViewModel() {
 
     private val repository = FavoriteUserRepository(context)
+
     val users = MutableLiveData<ArrayList<UserDetail>>()
 
+    // Set Favorite Users
     fun setUser() {
         users.postValue(repository.getAll())
     }
