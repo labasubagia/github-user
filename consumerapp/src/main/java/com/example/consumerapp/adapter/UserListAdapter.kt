@@ -32,11 +32,6 @@ class UserListAdapter : RecyclerView.Adapter<UserListAdapter.UserListViewHolder>
         }
     }
 
-    // setter
-    fun setOnItemClickCallback(onItemClickCallback: OnItemClickCallback) {
-        this.onItemClickCallback = onItemClickCallback
-    }
-
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): UserListViewHolder {
         val view =
             LayoutInflater.from(parent.context).inflate(R.layout.layout_item_user, parent, false)

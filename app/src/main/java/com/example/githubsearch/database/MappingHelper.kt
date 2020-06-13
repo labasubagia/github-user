@@ -33,21 +33,4 @@ object MappingHelper {
         return list
     }
 
-    fun mapCursorToObject(userCursor: Cursor?): UserDetail {
-        var user = UserDetail(login = "")
-        userCursor?.apply {
-            moveToFirst()
-            user = UserDetail(
-                name = getString(getColumnIndexOrThrow(NAME)),
-                login = getString(getColumnIndexOrThrow(LOGIN)),
-                avatar_url = getString(getColumnIndexOrThrow(AVATAR_URL)),
-                company = getString(getColumnIndexOrThrow(COMPANY)),
-                location = getString(getColumnIndexOrThrow(LOCATION)),
-                public_repos = getInt(getColumnIndexOrThrow(PUBLIC_REPOS)),
-                followers = getInt(getColumnIndexOrThrow(FOLLOWERS)),
-                following = getInt(getColumnIndexOrThrow(FOLLOWING))
-            )
-        }
-        return user
-    }
 }
