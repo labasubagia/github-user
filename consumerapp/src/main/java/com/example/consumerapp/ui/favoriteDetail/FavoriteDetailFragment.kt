@@ -128,9 +128,10 @@ class FavoriteDetailFragment : Fragment() {
                     // Show SnackBar
                     val message = getString(
                         if (status)
-                            R.string.message_delete_favorite_failed
-                        else
                             R.string.message_delete_favorite_success
+                        else
+                            R.string.message_delete_favorite_failed
+
                     )
                     Snackbar.make(view as View, message, Snackbar.LENGTH_LONG).show()
 
