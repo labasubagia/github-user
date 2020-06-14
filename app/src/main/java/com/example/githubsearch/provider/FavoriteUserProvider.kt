@@ -97,16 +97,30 @@ class FavoriteUserProvider : ContentProvider() {
 
     override fun delete(uri: Uri, selection: String?, selectionArgs: Array<String>?): Int {
 
-        // Delete
-        val deleted = when (uriMatcher.match(uri)) {
-            USER_NAME -> repository.deleteByUsername(uri.lastPathSegment.toString())
-            else -> 0
+        var deleted = 0
+
+        // Create Thread
+        val thread = Thread(Runnable {
+            deleted = when (uriMatcher.match(uri)) {
+                USER_NAME -> repository.deleteByUsername(uri.lastPathSegment.toString())
+                else -> 0
+            }
+        })
+
+        // Run Thread
+        try {
+            thread.start()
+            thread.join()
+        } catch (e: InterruptedException) {
+            e.printStackTrace()
         }
+
+        // When Success, Refresh Widget
+        if (deleted > 0) {
+            FavoriteUserWidget.sendRefreshBroadcast(context as Context)
+        }
+
         context?.contentResolver?.notifyChange(CONTENT_URI, null)
-
-        // Refresh Widget
-        FavoriteUserWidget.sendRefreshBroadcast(context as Context)
-
         return deleted
     }
 }
