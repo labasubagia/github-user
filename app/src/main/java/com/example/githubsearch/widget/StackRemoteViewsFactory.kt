@@ -77,7 +77,7 @@ class StackRemoteViewsFactory(private val context: Context) :
 
     override fun getCount() = users.size
 
-    override fun getItemId(i: Int): Long = 0
+    override fun getItemId(position: Int) = position.toLong()
 
     override fun getLoadingView(): RemoteViews? = null
 
