@@ -23,7 +23,10 @@ class PreferenceFragment : PreferenceFragmentCompat(),
 
     override fun onCreatePreferences(savedInstanceState: Bundle?, rootKey: String?) {
         activity?.title = getString(R.string.page_preference)
+        showBackToHomeOptionMenu(this)
+
         addPreferencesFromResource(R.xml.preferences)
+
         init()
         setValues()
     }
