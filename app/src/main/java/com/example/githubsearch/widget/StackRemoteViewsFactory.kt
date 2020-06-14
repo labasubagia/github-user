@@ -32,10 +32,25 @@ class StackRemoteViewsFactory(private val context: Context) :
     }
 
     override fun getViewAt(position: Int): RemoteViews? {
-        if (position == AdapterView.INVALID_POSITION || users.isEmpty())
+
+        // Break When
+        if (
+        // Data Empty
+            users.isEmpty()
+
+            // Position Invalid
+            || position == AdapterView.INVALID_POSITION
+
+            // Cannot Get Data
+            || null == users.getOrNull(position)
+        )
             return null
 
+
+        // Continue When User data Valid
+
         val user = users[position]
+
         val bitmap = Glide.with(context)
             .asBitmap()
             .load(user.avatar_url)
