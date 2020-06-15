@@ -27,7 +27,6 @@ object UtilSharedPreference {
     * SharedPreference Load Settings
     * Settings:
     * - Language
-    * - Reminder
     * */
     fun loadPreferenceSettings(context: Context) {
         val sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context)
