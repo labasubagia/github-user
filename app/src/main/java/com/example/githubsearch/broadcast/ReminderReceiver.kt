@@ -10,7 +10,9 @@ import android.content.Intent
 import android.media.RingtoneManager
 import android.os.Build
 import androidx.core.app.NotificationCompat
+import androidx.navigation.NavDeepLinkBuilder
 import com.example.githubsearch.R
+import com.example.githubsearch.activity.main.MainActivity
 import java.util.*
 
 class ReminderReceiver : BroadcastReceiver() {
@@ -40,14 +42,23 @@ class ReminderReceiver : BroadcastReceiver() {
         val sound = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION)
         val vibrate = longArrayOf(1000, 1000, 1000, 1000, 1000)
 
+        // Click Notification Go To App (HomeFragment)
+        val pendingIntent = NavDeepLinkBuilder(context)
+            .setComponentName(MainActivity::class.java)
+            .setGraph(R.navigation.main_navigation)
+            .setDestination(R.id.homeFragment)
+            .createPendingIntent()
+
         // Notification Builder
         val builder = NotificationCompat.Builder(context, channelId)
             .apply {
+                setContentIntent(pendingIntent)
                 setSmallIcon(R.drawable.ic_notifications_black_24dp)
                 setContentTitle(title)
                 setContentText(message)
                 setVibrate(vibrate)
                 setSound(sound)
+                setAutoCancel(true)
             }
 
         // Notification Manager
@@ -71,6 +82,7 @@ class ReminderReceiver : BroadcastReceiver() {
 
     /*
     * Activate Reminder
+    * Time 9.00 AM
     * */
     private fun activateReminder(context: Context) {
 
