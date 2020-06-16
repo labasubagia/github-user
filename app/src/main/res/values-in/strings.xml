@@ -8,7 +8,6 @@
     <string name="request_network_failure">Harap periksa koneksi anda dan coba lagi nanti</string>
     <string name="request_api_problem">Terjadi kesalahan server, harap coba lagi nanti</string>
     <string name="request_unknown_fail">Terjadi error yang tidak diketahui, mohon coba nanti</string>
-    <string name="request_error_label">Kesalahan</string>
     <string name="background_profile">Latar Belakang Profil</string>
     <string name="follower_zero">Pengguna tidak diikuti siapapun</string>
     <string name="following_zero">Pengguna tidak mengikuti siapapun</string>
@@ -46,7 +45,6 @@
     <string name="message_reminder_change_deactivate">Pengingat nonaktif!</string>
     <string name="notification_title">Pengingat</string>
     <string name="notification_message">Ayo cari pengguna populer di Github!</string>
-    <string name="widget_favorite_user_text">Pengguna Favorit</string>
     <string name="label_name">Nama</string>
     <string name="label_username">Username</string>
     <string name="label_favorite_github_user">Pengguna Github Favorit</string>

@@ -10,14 +10,6 @@
 
 
     <!-- ProgressBar style -->
-    <style name="ProgressBarStyle" parent="Widget.AppCompat.ProgressBar">
-        <item name="android:indeterminateTint">@color/colorAccent</item>
-        <item name="android:indeterminateTintMode">src_in</item>
-    </style>
-
-    <style name="ProgressBarStyle.Gone">
-        <item name="android:visibility">gone</item>
-    </style>
 
 
     <!-- CardView style -->
