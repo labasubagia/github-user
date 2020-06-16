@@ -56,8 +56,8 @@ class DetailFragment : Fragment() {
         }
     }
 
-    override fun onActivityCreated(savedInstanceState: Bundle?) {
-        super.onActivityCreated(savedInstanceState)
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
 
         // Navigation Args
         username = DetailFragmentArgs.fromBundle(arguments as Bundle).username

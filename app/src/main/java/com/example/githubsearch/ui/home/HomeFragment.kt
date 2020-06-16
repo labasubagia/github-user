@@ -38,11 +38,14 @@ class HomeFragment : Fragment() {
         loadPreferenceSettings(requireContext())
     }
 
-    override fun onActivityCreated(savedInstanceState: Bundle?) {
-        super.onActivityCreated(savedInstanceState)
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
         initRecyclerView()
         initSearchView()
         initViewModel()
+
+        // On App Open
         showInfoView()
     }
 
